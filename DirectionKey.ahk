@@ -10,11 +10,8 @@ Description = 方向键映射
 #SingleInstance Force
 
 SendMode "Event"
-SetKeyDelay(0, 0)
+SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
-
-; #MaxThreads 10
-; #MaxThreadsPerHotkey 2
 
 ; SendCode(VK)
 ; {

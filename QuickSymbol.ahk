@@ -5,10 +5,8 @@
 CoordMode "ToolTip", "Screen"
 
 SendMode "Event"
-SetKeyDelay(0, 0)
+SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
-
-; #MaxThreadsPerHotkey 2
 
 ;#region Windows Virtual Desktop
 $#-:: {
