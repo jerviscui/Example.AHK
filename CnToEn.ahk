@@ -378,3 +378,95 @@ IsCnIME(WinTitle := "A")
         ; SendInput(Symbol . "{U+3002}{Space}")
     }
 }
+
+;#region select text to convert en punctuation
+ToFullWidth := Map(
+    ",", "，",
+    ".", "。",
+    "?", "？",
+    ";", "；",
+    ":", "：",
+    "!", "！",
+    "<", "《",
+    ">", "》",
+    "/", "、",    
+    "(", "（",
+    ")", "）",
+    "[", "【",
+    "]", "】"
+)
+
+ToHalfWidth := Map(
+    "，", ",",
+    "。", ".",
+    "？", "?",
+    "；", ";",
+    "：", ":",
+    "！", "!",
+    "《", "<",
+    "》", ">",
+    "、", ",",    
+    "（", "(",
+    "）", ")",
+    "【", "[",
+    "】", "]",
+    "‘", "'",
+    "’", "'",
+    "“", "`"",
+    "”", "`""
+)
+
+$F12:: {
+    Old := A_Clipboard
+    A_Clipboard := ""
+
+    Send("^c")
+
+    if ClipWait(1)
+    {
+        Txt := A_Clipboard
+
+        if IsCnIME()
+        {
+            for k, v in ToFullWidth
+            {
+                Txt := StrReplace(Txt, k, v)
+            }
+
+            Txt := RegExReplace(Txt, "S)'(.*)'", "‘$1’")
+            Txt := RegExReplace(Txt, "S)`"(.*)`"", "“$1”")
+            ; clear space
+            Txt := RegExReplace(Txt, "S)[\t ]*([，。？；：！《》、（）【】‘’“”])[\t ]*", "$1")
+        }
+        else
+        {
+            for k, v in ToHalfWidth
+            {
+                Txt := StrReplace(Txt, k, v)
+            }
+
+            ; clear space
+            Txt := RegExReplace(Txt, "S)[\t ]*([\,\.\?\;\:\!\<\>\(\)\[\]'`"])[\t ]*", "$1")
+            ; add precede space
+            Txt := RegExReplace(Txt, "S)([\(\[]+)", " $1")
+            Txt := RegExReplace(Txt, "('.+?')", " $1 ")
+            Txt := RegExReplace(Txt, "S)(`".+?`")", " $1 ")
+            ; add follwed space
+            Txt := RegExReplace(Txt, "S)([\)\]]+)", "$1 ")
+            Txt := RegExReplace(Txt, "S)[\t ]*([\,\.\?\;\:\!])[\t ]*", "$1 ")
+        }
+
+        A_Clipboard := Txt
+        ClipWait
+        Send("^v")
+
+        Sleep(1000)
+
+        A_Clipboard := ""
+        Txt := ""
+    }
+
+    A_Clipboard := Old
+    Old := ""
+}
+;#endregion
