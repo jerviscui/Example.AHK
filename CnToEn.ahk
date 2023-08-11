@@ -448,11 +448,11 @@ $F12:: {
             ; clear space
             Txt := RegExReplace(Txt, "S)[\t ]*([\,\.\?\;\:\!\<\>\(\)\[\]'`"])[\t ]*", "$1")
             ; add precede space
-            Txt := RegExReplace(Txt, "S)([\(\[]+)", " $1")
             Txt := RegExReplace(Txt, "('.+?')", " $1 ")
             Txt := RegExReplace(Txt, "S)(`".+?`")", " $1 ")
+            Txt := RegExReplace(Txt, "S)([\(\[]+)[\t ]*", " $1")
             ; add follwed space
-            Txt := RegExReplace(Txt, "S)([\)\]]+)", "$1 ")
+            Txt := RegExReplace(Txt, "S)[\t ]*([\)\]]+)", "$1 ")
             Txt := RegExReplace(Txt, "S)[\t ]*([\,\.\?\;\:\!])[\t ]*", "$1 ")
         }
 
