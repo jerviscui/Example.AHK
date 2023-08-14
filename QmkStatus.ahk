@@ -19,3 +19,23 @@ MyGui.MarginY := 3
 Txt := MyGui.Add("Text", "cWhite", "Num+Swap")
 
 MyGui.Show("X50 Y30 NoActivate")
+
+F15 & 1:: {
+    ToolTip "1"
+}
+
+F15 & 2:: {
+    ToolTip "2"
+}
+
+F15 & 3:: {
+    ToolTip "3"
+}
+
+F15 & 4:: {
+    ToolTip "4"
+}
+
+$F15:: {
+    Send("{F15}")
+}
