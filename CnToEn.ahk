@@ -416,7 +416,7 @@ ToHalfWidth := Map(
     "”", "`""
 )
 
-$F12:: {
+$F13:: {
     Old := A_Clipboard
     A_Clipboard := ""
 
