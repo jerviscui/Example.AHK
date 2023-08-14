@@ -5,7 +5,7 @@ Description = 中英文符号互换
 
 #SingleInstance Force
 
-SendMode "Event"
+; SendMode "Event"
 SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
@@ -72,7 +72,7 @@ IsCnIME(WinTitle := "A")
     }
 }
 
-; 》》  to >> 
+; 》》  to >>
 :*?COZ:>> :: {
     if IsCnIME()
     {
@@ -80,12 +80,12 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        return
+        SendInput("{U+003E}{U+003E}{Space}")
         ; SendInput("{U+300B}{U+300B}{Space}")
     }
 }
 
-; 》 to > 
+; 》 to >
 :*?COZ:> :: {
     if IsCnIME()
     {
@@ -93,7 +93,7 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        return
+        SendInput("{U+003E}{Space}")
         ; SendInput("{U+300B}")
     }
 }
@@ -110,7 +110,7 @@ IsCnIME(WinTitle := "A")
     }
 }
 
-; 》 > to > 
+; > to 》
 :?COZ:>:: {
     if IsCnIME()
     {
@@ -308,12 +308,12 @@ IsCnIME(WinTitle := "A")
         SendInput("{U+005B}{U+005B}{U+005D}{U+005D}{Left 2}")
     }
     else {
-        return
+        SendInput("{U+005B}{U+005B}{U+005D}{U+005D}{Left 2}")
         ; SendInput("{U+3010}{U+3010}{U+3011}{U+3011}{Left 2}")
     }
 }
 
-; [ to 【】
+; [ to 【
 :?COZ:[:: {
     if IsCnIME()
     {
@@ -374,7 +374,7 @@ IsCnIME(WinTitle := "A")
         SendInput(Symbol . "{U+002E}{Space}")
     }
     else {
-        return
+        SendInput(Symbol . "{U+002E}{Space}")
         ; SendInput(Symbol . "{U+3002}{Space}")
     }
 }
@@ -389,7 +389,7 @@ ToFullWidth := Map(
     "!", "！",
     "<", "《",
     ">", "》",
-    "/", "、",    
+    "/", "、",
     "(", "（",
     ")", "）",
     "[", "【",
@@ -405,7 +405,7 @@ ToHalfWidth := Map(
     "！", "!",
     "《", "<",
     "》", ">",
-    "、", ",",    
+    "、", ",",
     "（", "(",
     "）", ")",
     "【", "[",
