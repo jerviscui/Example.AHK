@@ -1,41 +1,222 @@
 ﻿/*
-Description = 中英文符号互换
+Description = QMK OSD
 */
 #Requires AutoHotkey v2.0
 
 #SingleInstance Force
 
-SendMode "Event"
+; SendMode "Event"
 SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
 MyGui := Gui("+LastFound +AlwaysOnTop +ToolWindow -Caption +Border +E0x08000000", "qmk status")
 MyGui.SetFont("s9 bold", "Microsoft YaHei")
-MyGui.BackColor := "Black"
-WinSetTransparent(130, MyGui)
 MyGui.MarginX := 5
 MyGui.MarginY := 3
+MyGui.BackColor := "Black"
+WinSetTransparent(130, MyGui)
 
-Txt := MyGui.Add("Text", "cWhite", "Num+Swap")
+Txt := MyGui.Add("Text", "cWhite", "")
 
-MyGui.Show("X50 Y30 NoActivate")
+; MyGui.Show("X50 Y30 NoActivate")
 
-F15 & 1:: {
-    ToolTip "1"
+global Num := ""
+global F := ""
+global Swap := ""
+global OSM := Map(
+    "LS", 0,
+    "RS", 0,
+    "LA", 0,
+    "LC", 0,
+    "LG", 0)
+
+; Num on
+F11 & 1:: {
+    global Num
+
+    Num := "Num"
+    Show()
 }
 
-F15 & 2:: {
-    ToolTip "2"
+; Num off
+F11 & 2:: {
+    global Num
+
+    Num := ""
+    Show()
 }
 
-F15 & 3:: {
-    ToolTip "3"
+; F on
+F11 & 3:: {
+    global F
+
+    F := "F"
+    Show()
 }
 
-F15 & 4:: {
-    ToolTip "4"
+; F off
+F11 & 4:: {
+    global F
+
+    F := ""
+    Show()
+}
+
+; Swap on
+F11 & 9:: {
+    global Swap
+
+    Swap := "Swap"
+    Show()
+}
+
+; Swap off
+F11 & 0:: {
+    global Swap
+
+    Swap := ""
+    Show()
+}
+
+;#region OSM
+F12 & 1:: {
+    global OSM
+
+    OSM["LS"] := 1
+    Show()
+}
+
+F12 & 2:: {
+    global OSM
+
+    OSM["LS"] := 0
+    Show()
+}
+
+F12 & 3:: {
+    global OSM
+
+    OSM["RS"] := 1
+    Show()
+}
+
+F12 & 4:: {
+    global OSM
+
+    OSM["RS"] := 0
+    Show()
+}
+
+F12 & 5:: {
+    global OSM
+
+    OSM["LA"] := 1
+    Show()
+}
+
+F12 & 6:: {
+    global OSM
+
+    OSM["LA"] := 0
+    Show()
+}
+
+F12 & 7:: {
+    global OSM
+
+    OSM["LC"] := 1
+    Show()
+}
+
+F12 & 8:: {
+    global OSM
+
+    OSM["LC"] := 0
+    Show()
+}
+
+F12 & 9:: {
+    global OSM
+
+    OSM["LG"] := 1
+    Show()
+}
+
+F12 & 0:: {
+    global OSM
+
+    OSM["LG"] := 0
+    Show()
+}
+
+;#endregion
+
+Show() {
+    value := ""
+
+    ;layer
+    if (StrLen(F)) {
+        value := F
+    }
+    else {
+        if (StrLen(Num)) {
+            value := Num
+        }
+    }
+
+    ;swap
+    if (StrLen(Swap)) {
+        if (StrLen(value)) {
+            value := value . "+"
+        }
+        value := value . Swap
+    }
+
+    ;OSM
+    newline := ""
+    for key, value in OSM {
+        if (value) {
+            newline := newline . "+" . key
+        }
+    }
+    if (StrLen(newline)) {
+        newline := Trim(newline, "+")
+        if (StrLen(value)) {
+            value := value . "`n" . newline
+        }
+        else {
+            value := newline
+        }
+    }
+
+    Txt.Text := value
+
+    if (StrLen(value) == 0) {
+        MyGui.Hide()
+    }
+    else {
+        GetSize(&value, &w, &h)
+        Txt.Move(, , w, h)
+        MyGui.Show("X50 Y30 AutoSize NoActivate")
+    }
+}
+
+GetSize(&Content, &W, &H) {
+    tmpGui := Gui()
+    tmpGui.SetFont("s9 bold", "Microsoft YaHei")
+    tmpGui.MarginX := 5
+    tmpGui.MarginY := 3
+
+    tmpTxt := tmpGui.AddText(, Content)
+
+    tmpTxt.GetPos(&x, &y, &W, &H)
+    tmpGui.Destroy()
 }
 
 $F15:: {
     Send("{F15}")
+}
+
+$F16:: {
+    Send("{F16}")
 }
