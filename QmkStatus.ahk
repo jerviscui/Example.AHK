@@ -20,8 +20,7 @@ Txt := MyGui.Add("Text", "cWhite", "")
 
 ; MyGui.Show("X50 Y30 NoActivate")
 
-global Num := ""
-global F := ""
+global Layer := ""
 global Swap := ""
 global OSM := Map(
     "LS", 0,
@@ -30,40 +29,32 @@ global OSM := Map(
     "LC", 0,
     "LG", 0)
 
-; Num on
-F11 & 1:: {
-    global Num
+; layer 1
+F15 & 1:: {
+    global Layer
 
-    Num := "Num"
+    Layer := ""
     Show()
 }
 
-; Num off
-F11 & 2:: {
-    global Num
+; layer 2
+F15 & 2:: {
+    global Layer
 
-    Num := ""
+    Layer := "F"
     Show()
 }
 
-; F on
-F11 & 3:: {
-    global F
+; layer 3
+F15 & 3:: {
+    global Layer
 
-    F := "F"
-    Show()
-}
-
-; F off
-F11 & 4:: {
-    global F
-
-    F := ""
+    Layer := "Num"
     Show()
 }
 
 ; Swap on
-F11 & 9:: {
+F15 & 9:: {
     global Swap
 
     Swap := "Swap"
@@ -71,7 +62,7 @@ F11 & 9:: {
 }
 
 ; Swap off
-F11 & 0:: {
+F15 & 0:: {
     global Swap
 
     Swap := ""
@@ -79,70 +70,70 @@ F11 & 0:: {
 }
 
 ;#region OSM
-F12 & 1:: {
+F16 & 1:: {
     global OSM
 
     OSM["LS"] := 1
     Show()
 }
 
-F12 & 2:: {
+F16 & 2:: {
     global OSM
 
     OSM["LS"] := 0
     Show()
 }
 
-F12 & 3:: {
+F16 & 3:: {
     global OSM
 
     OSM["RS"] := 1
     Show()
 }
 
-F12 & 4:: {
+F16 & 4:: {
     global OSM
 
     OSM["RS"] := 0
     Show()
 }
 
-F12 & 5:: {
+F16 & 5:: {
     global OSM
 
     OSM["LA"] := 1
     Show()
 }
 
-F12 & 6:: {
+F16 & 6:: {
     global OSM
 
     OSM["LA"] := 0
     Show()
 }
 
-F12 & 7:: {
+F16 & 7:: {
     global OSM
 
     OSM["LC"] := 1
     Show()
 }
 
-F12 & 8:: {
+F16 & 8:: {
     global OSM
 
     OSM["LC"] := 0
     Show()
 }
 
-F12 & 9:: {
+F16 & 9:: {
     global OSM
 
     OSM["LG"] := 1
     Show()
 }
 
-F12 & 0:: {
+F16 & 0:: {
     global OSM
 
     OSM["LG"] := 0
@@ -152,17 +143,8 @@ F12 & 0:: {
 ;#endregion
 
 Show() {
-    value := ""
-
     ;layer
-    if (StrLen(F)) {
-        value := F
-    }
-    else {
-        if (StrLen(Num)) {
-            value := Num
-        }
-    }
+    value := Layer
 
     ;swap
     if (StrLen(Swap)) {
@@ -197,6 +179,7 @@ Show() {
     else {
         GetSize(&value, &w, &h)
         Txt.Move(, , w, h)
+        Txt.Redraw()
         MyGui.Show("X50 Y30 AutoSize NoActivate")
     }
 }
