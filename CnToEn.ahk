@@ -44,7 +44,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF0C}")
+        ; only for cn to en
+        SendInput("{U+002C}{Tab}")
+        ; SendInput("{U+FF0C}")
     }
 }
 
@@ -56,7 +58,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+3002}")
+        ; only for cn to en
+        SendInput("{U+002E}{Tab}")
+        ; SendInput("{U+3002}")
     }
 }
 
@@ -68,7 +72,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+300A}{U+300B}{Left}")
+        ; only for cn to en
+        SendInput("{U+003C}{U+003E}{Tab}")
+        ; SendInput("{U+300A}{U+300B}{Left}")
     }
 }
 
@@ -80,6 +86,7 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
+        ; only for cn to en
         SendInput("{U+003E}{U+003E}{Space}")
         ; SendInput("{U+300B}{U+300B}{Space}")
     }
@@ -93,6 +100,7 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
+        ; only for cn to en
         SendInput("{U+003E}{Space}")
         ; SendInput("{U+300B}")
     }
@@ -106,7 +114,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+300A}")
+        ; only for cn to en
+        SendInput("{U+003C}{Tab}")
+        ; SendInput("{U+300A}")
     }
 }
 
@@ -118,7 +128,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+300B}")
+        ; only for cn to en
+        SendInput("{U+003E}{Tab}")
+        ; SendInput("{U+300B}")
     }
 }
 
@@ -130,7 +142,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+3001}")
+        ; only for cn to en
+        SendInput("{U+002F}{Tab}")
+        ; SendInput("{U+3001}")
     }
 }
 
@@ -142,7 +156,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF1F}")
+        ; only for cn to en
+        SendInput("{U+003F}{Tab}")
+        ; SendInput("{U+FF1F}")
     }
 }
 
@@ -154,7 +170,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF1B}")
+        ; only for cn to en
+        SendInput("{U+003B}{Tab}")
+        ; SendInput("{U+FF1B}")
     }
 }
 
@@ -166,7 +184,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF1A}")
+        ; only for cn to en
+        SendInput("{U+003A}{Tab}")
+        ; SendInput("{U+FF1A}")
     }
 }
 
@@ -202,7 +222,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+3001}")
+        ; only for cn to en
+        SendInput("{U+005C}{Tab}")
+        ; SendInput("{U+3001}")
     }
 }
 
@@ -214,7 +236,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+2014}{U+2014}")
+        ; only for cn to en
+        SendInput("{U+005F}{Tab}")
+        ; SendInput("{U+2014}{U+2014}")
     }
 }
 
@@ -226,7 +250,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF01}")
+        ; only for cn to en
+        SendInput("{U+0021}{Tab}")
+        ; SendInput("{U+FF01}")
     }
 }
 
@@ -238,7 +264,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FFE5}")
+        ; only for cn to en
+        SendInput("{U+0024}{Tab}")
+        ; SendInput("{U+FFE5}")
     }
 }
 
@@ -250,7 +278,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+2026}{U+2026}")
+        ; only for cn to en
+        SendInput("{U+005E}{Tab}")
+        ; SendInput("{U+2026}{U+2026}")
     }
 }
 
@@ -274,7 +304,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF08}")
+        ; only for cn to en
+        SendInput("{U+0028}{Tab}")
+        ; SendInput("{U+FF08}")
     }
 }
 
@@ -286,7 +318,9 @@ IsCnIME(WinTitle := "A")
     }
     else
     {
-        SendInput("{U+FF09}")
+        ; only for cn to en
+        SendInput("{U+0029}{Tab}")
+        ; SendInput("{U+FF09}")
     }
 }
 
@@ -320,7 +354,9 @@ IsCnIME(WinTitle := "A")
         SendInput("{U+005B}")
     }
     else {
-        SendInput("{U+3010}")
+        ; only for cn to en
+        SendInput("{U+005B}{Tab}")
+        ; SendInput("{U+3010}")
     }
 }
 
@@ -331,7 +367,9 @@ IsCnIME(WinTitle := "A")
         SendInput("{U+005D}")
     }
     else {
-        SendInput("{U+3011}")
+        ; only for cn to en
+        SendInput("{U+005D}{Tab}")
+        ; SendInput("{U+3011}")
     }
 }
 
