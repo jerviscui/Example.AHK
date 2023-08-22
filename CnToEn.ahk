@@ -37,29 +37,29 @@ IsCnIME(WinTitle := "A")
 #Hotstring EndChars `t
 
 ; , to ，
-:?COZ:,:: {
+:?B0COZ:,:: {
     if IsCnIME()
     {
-        SendInput("{U+002C}")
+        SendInput("{Backspace}{U+002C}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+002C}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF0C}")
     }
 }
 
 ; . to 。
-:?COZ:.:: {
+:?B0COZ:.:: {
     if IsCnIME()
     {
-        SendInput("{U+002E}")
+        SendInput("{Backspace}{U+002E}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+002E}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+3002}")
     }
 }
@@ -107,85 +107,85 @@ IsCnIME(WinTitle := "A")
 }
 
 ; < to 《
-:?COZ:<:: {
+:?B0COZ:<:: {
     if IsCnIME()
     {
-        SendInput("{U+003C}")
+        SendInput("{Backspace}{U+003C}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+003C}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+300A}")
     }
 }
 
 ; > to 》
-:?COZ:>:: {
+:?B0COZ:>:: {
     if IsCnIME()
     {
-        SendInput("{U+003E}")
+        SendInput("{Backspace}{U+003E}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+003E}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+300B}")
     }
 }
 
 ; / to 、
-:?COZ:/:: {
+:?B0COZ:/:: {
     if IsCnIME()
     {
-        SendInput("{U+002F}")
+        SendInput("{Backspace}{U+002F}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+002F}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+3001}")
     }
 }
 
 ; ? to ？
-:?COZ:?:: {
+:?B0COZ:?:: {
     if IsCnIME()
     {
-        SendInput("{U+003F}")
+        SendInput("{Backspace}{U+003F}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+003F}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF1F}")
     }
 }
 
 ; ; to ；
-:?COZ:;:: {
+:?B0COZ:;:: {
     if IsCnIME()
     {
-        SendInput("{U+003B}")
+        SendInput("{Backspace}{U+003B}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+003B}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF1B}")
     }
 }
 
 ; : to ：
-:?COZ:`::: {
+:?B0COZ:`::: {
     if IsCnIME()
     {
-        SendInput("{U+003A}")
+        SendInput("{Backspace}{U+003A}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+003A}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF1A}")
     }
 }
@@ -215,21 +215,21 @@ IsCnIME(WinTitle := "A")
 }
 
 ; \ to 、
-:?COZ:\:: {
+:?B0COZ:\:: {
     if IsCnIME()
     {
-        SendInput("{U+005C}")
+        SendInput("{Backspace}{U+005C}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+005C}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+3001}")
     }
 }
 
 ; _ to ——
-:?COZ:_:: {
+:?B0COZ:_:: {
     if IsCnIME()
     {
         SendInput("{Backspace}{U+005F}")
@@ -237,41 +237,41 @@ IsCnIME(WinTitle := "A")
     else
     {
         ; only for cn to en
-        SendInput("{U+005F}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+2014}{U+2014}")
     }
 }
 
 ; ! to ！
-:?COZ:!:: {
+:?B0COZ:!:: {
     if IsCnIME()
     {
-        SendInput("{U+0021}")
+        SendInput("{Backspace}{U+0021}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+0021}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF01}")
     }
 }
 
 ; $ to ￥
-:?COZ:$:: {
+:?B0COZ:$:: {
     if IsCnIME()
     {
-        SendInput("{U+0024}")
+        SendInput("{Backspace}{U+0024}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+0024}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FFE5}")
     }
 }
 
 ; ^ to ……
-:?COZ:^:: {
+:?B0COZ:^:: {
     if IsCnIME()
     {
         SendInput("{Backspace}{U+005E}")
@@ -279,7 +279,7 @@ IsCnIME(WinTitle := "A")
     else
     {
         ; only for cn to en
-        SendInput("{U+005E}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+2026}{U+2026}")
     }
 }
@@ -297,29 +297,29 @@ IsCnIME(WinTitle := "A")
 }
 
 ; ( to （
-:?COZ:(:: {
+:?B0COZ:(:: {
     if IsCnIME()
     {
-        SendInput("{U+0028}")
+        SendInput("{Backspace}{U+0028}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+0028}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF08}")
     }
 }
 
 ; ) to ）
-:?COZ:):: {
+:?B0COZ:):: {
     if IsCnIME()
     {
-        SendInput("{U+0029}")
+        SendInput("{Backspace}{U+0029}")
     }
     else
     {
         ; only for cn to en
-        SendInput("{U+0029}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+FF09}")
     }
 }
@@ -348,27 +348,27 @@ IsCnIME(WinTitle := "A")
 }
 
 ; [ to 【
-:?COZ:[:: {
+:?B0COZ:[:: {
     if IsCnIME()
     {
-        SendInput("{U+005B}")
+        SendInput("{Backspace}{U+005B}")
     }
     else {
         ; only for cn to en
-        SendInput("{U+005B}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+3010}")
     }
 }
 
 ; ]; to 】
-:?COZ:]:: {
+:?B0COZ:]:: {
     if IsCnIME()
     {
-        SendInput("{U+005D}")
+        SendInput("{Backspace}{U+005D}")
     }
     else {
         ; only for cn to en
-        SendInput("{U+005D}{Tab}")
+        SendInput("{Tab}")
         ; SendInput("{U+3011}")
     }
 }
