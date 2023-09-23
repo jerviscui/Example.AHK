@@ -270,6 +270,20 @@ IsCnIME(WinTitle := "A")
     }
 }
 
+; $$ to ￥￥
+:?B0COZ:$$:: {
+    if IsCnIME()
+    {
+        SendInput("{Backspace 2}{U+0024}{U+0024}{Left}")
+    }
+    else
+    {
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+FFE5}")
+    }
+}
+
 ; $ to ￥
 :?B0COZ:$:: {
     if IsCnIME()
