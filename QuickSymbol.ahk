@@ -11,18 +11,7 @@ SendMode "Event"
 SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
-;#region Windows Virtual Desktop
-$#-:: {
-    Send("#^{Left}")
-}
-
-$#=:: {
-    Send("#^{Right}")
-}
-;#endregion
-
 ;#region Number output Numeric symbol and F1~F10
-
 ; time := DllCall("GetDoubleClickTime")
 time := 230
 

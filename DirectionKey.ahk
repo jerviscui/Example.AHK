@@ -13,39 +13,40 @@ SendMode "Event"
 SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
-; SendCode(VK)
-; {
-;     ; Sleep(10)
-;     Send(VK)
-; }
+;#region Windows Virtual Desktop
+$#-:: {
+    Send("#^{Left}")
+}
 
-; $!i:: {
-;     timmer := SendCode.Bind("{UP}")
-;     SetTimer(timmer, 10)
-;     KeyWait("{Up}")
-;     SetTimer(timmer, 0)
-; }
+$#=:: {
+    Send("#^{Right}")
+}
+;#endregion
 
-; $!i:: {
-;     while (GetKeyState("Alt", "P") && GetKeyState("i", "P"))
-;     {
-;         Send("{Up}")
-;         Sleep(10)
-;     }
-; }
-
-$!i:: Send "{Up}"
-$!j:: Send "{Left}"
-$!k:: Send "{Down}"
-$!l:: Send "{Right}"
+; $!i:: Send "{Up}"
+; $!j:: Send "{Left}"
+; $!k:: Send "{Down}"
+; $!l:: Send "{Right}"
 
 ; $!e:: Send "{Up}"
 ; $!s:: Send "{Left}"
 ; $!d:: Send "{Down}"
 ; $!f:: Send "{Right}"
 
-$!y:: Send "{Home}"
-$!u:: Send "{End}"
+; $!y:: Send "{Home}"
+; $!u:: Send "{End}"
 
-$!n:: Send "{PgDn}"
-$!p:: Send "{PgUp}"
+; $!n:: Send "{PgDn}"
+; $!p:: Send "{PgUp}"
+
+; 左Win键+鼠标滚轮切换虚拟桌面
+<#WheelUp:: #^Left
+<#WheelDown:: #^Right
+
+; 左Alt键+鼠标滚轮切换窗口
+; <!WheelUp:: ShiftAltTab
+; <!WheelDown:: AltTab
+
+;Browser_Forward & Browser_Back
+XButton2:: !Right
+XButton1:: !Left
