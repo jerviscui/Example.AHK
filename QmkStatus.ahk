@@ -195,11 +195,3 @@ GetSize(&Content, &W, &H) {
     tmpTxt.GetPos(&x, &y, &W, &H)
     tmpGui.Destroy()
 }
-
-$F15:: {
-    Send("{F15}")
-}
-
-$F16:: {
-    Send("{F16}")
-}
