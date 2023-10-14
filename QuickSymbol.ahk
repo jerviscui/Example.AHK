@@ -55,60 +55,70 @@ $F12:: {
 
         if GetKeyState("1", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F1}")
             return
         }
         if GetKeyState("2", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F2}")
             return
         }
         if GetKeyState("3", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F3}")
             return
         }
         if GetKeyState("4", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F4}")
             return
         }
         if GetKeyState("5", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F5}")
             return
         }
         if GetKeyState("6", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F6}")
             return
         }
         if GetKeyState("7", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F7}")
             return
         }
         if GetKeyState("8", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F8}")
             return
         }
         if GetKeyState("9", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F9}")
             return
         }
         if GetKeyState("0", "P")
         {
+            Count := 0
             Pressed := false
             Send("{F10}")
             return
@@ -120,7 +130,7 @@ $F12:: {
     if (Count != 1) {
         return
     }
-    
+
     Count := 0
     Pressed := false
     Send("{F12}")
