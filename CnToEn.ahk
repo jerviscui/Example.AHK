@@ -482,15 +482,17 @@ ToHalfWidth := Map(
     "”", "`""
 )
 
-$F13:: {
+F13:: {
     Old := A_Clipboard
     A_Clipboard := ""
 
+    Sleep(10)
     Send("^c")
 
     if ClipWait(1)
     {
         Txt := A_Clipboard
+        ; ToolTip(Txt)
 
         if IsCnIME()
         {

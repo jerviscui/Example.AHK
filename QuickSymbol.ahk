@@ -29,14 +29,30 @@ DoubleClick(VK)
 }
 
 global Pressed := false
+global Count := 0
 
+#MaxThreadsPerHotkey 2
 $F12:: {
     global Pressed
+    global Count
+
+    Count := Count + 1
+
+    if (Count >= 2) {
+        Count := 0
+        Pressed := false
+        Send("{F13}")
+        return
+    }
 
     Pressed := true
     startTime := A_TickCount + 400
     while startTime > A_TickCount
     {
+        if (Count = 0) {
+            return
+        }
+
         if GetKeyState("1", "P")
         {
             Pressed := false
@@ -101,9 +117,15 @@ $F12:: {
         Sleep(10)
     }
 
+    if (Count != 1) {
+        return
+    }
+    
+    Count := 0
     Pressed := false
     Send("{F12}")
 }
+#MaxThreadsPerHotkey 1
 
 $1:: {
     if Pressed
