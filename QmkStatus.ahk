@@ -173,7 +173,7 @@ Show() {
 
     Txt.Text := value
 
-    if (StrLen(value) == 0) {
+    if (StrLen(value) = 0) {
         MyGui.Hide()
     }
     else {
