@@ -218,3 +218,89 @@ $0:: {
     DoubleClick("0")
 }
 ;#endregion
+
+KeyPressed(Keys) {
+    for k in Keys
+    {
+        if GetKeyState(k, "P")
+        {
+            ; ToolTip(k)
+            return true
+        }
+    }
+}
+
+;#region markdown
+$^k:: {
+    if (!WinActive("A")) {
+        return
+    }
+
+    Old := A_Clipboard
+    A_Clipboard := ""
+    Txt := ""
+
+    Send("^c")
+    KeyWait "k"
+
+    startTime := A_TickCount + 400
+    Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    while startTime > A_TickCount
+    {
+        Sleep(20)
+
+        if KeyPressed(Keys)
+        {
+            ; ToolTip("break")
+            goto over
+        }
+    }
+
+    if ClipWait(0.2)
+    {
+        Txt := A_Clipboard
+        ; ToolTip(Txt)
+    }
+    else {
+        ; UE ""
+        ; Obsidian 不带\r\n
+        ; VS Code 带\r\n
+    }
+
+    if (Txt != "") {
+        Txt := RTrim(Txt, "`r`n")
+        Txt := RTrim(Txt, "`n")
+
+        Pos := InStr(Txt, "`n", 0, 1)
+        Len := StrLen(Txt)
+
+        if (Pos = 0)
+        {
+            if (InStr(Txt, " ", 0, -1) = Len) {
+                SendInput("{U+0060}{U+0060}{Left}")
+                goto over
+            }
+            else {
+                Txt := "``" . Txt . "``"
+            }
+        }
+        else {
+            Txt := "``````" . "`n" . Txt . "`n" . "``````"
+        }
+
+        A_Clipboard := Txt
+        ClipWait
+        Send("^v")
+
+        Sleep(200)
+    }
+    else {
+        SendInput("{U+0060}{U+0060}{Left}")
+    }
+
+over:
+    Txt := ""
+    A_Clipboard := Old
+    Old := ""
+}
+;#endregion
