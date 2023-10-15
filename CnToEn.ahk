@@ -352,6 +352,18 @@ IsCnIME(WinTitle := "A")
     }
 }
 
+; `` to ··
+:*?COZ:````:: {
+    if IsCnIME()
+    {
+        SendInput("{U+0060}{U+0060}{Left}")
+    }
+    else {
+        ; only for cn to en
+        SendInput("{U+0060}{U+0060}{Left}")
+    }
+}
+
 ; ` to ·
 :?COZ:``:: {
     if IsCnIME()
@@ -359,7 +371,9 @@ IsCnIME(WinTitle := "A")
         SendInput("{U+0060}")
     }
     else {
-        SendInput("{U+00B7}")
+        ; only for cn to en
+        SendInput("{U+0060}")
+        ; SendInput("{U+00B7}")
     }
 }
 
@@ -370,8 +384,8 @@ IsCnIME(WinTitle := "A")
         SendInput("{U+005B}{U+005B}{U+005D}{U+005D}{Left 2}")
     }
     else {
-        SendInput("{U+005B}{U+005B}{U+005D}{U+005D}{Left 2}")
-        ; SendInput("{U+3010}{U+3010}{U+3011}{U+3011}{Left 2}")
+        ; todo: some app use SendInput("{U+005B}{U+005B}{U+005D}{U+005D}{Left 2}")
+        SendInput("{U+005B}{U+005B}")
     }
 }
 
