@@ -224,23 +224,55 @@ KeyPressed(Keys) {
     {
         if GetKeyState(k, "P")
         {
-            ; ToolTip(k)
+            if (k = "k") {
+                Send("^k")
+                Send("^k")
+                return true
+            }
+
+            ;todo 会先发送k再发送Ctrlk，如何吞掉k，或者考虑使用 InputHook
+            Send("^k")
+            ; Send("^" . k)
             return true
         }
     }
+
+    return false
 }
+
+; $^j:: {
+; ih := InputHook("L1", "{LControl}{RControl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}{AppsKey}{F1}{F2}{F3}{F4}{F5}{F6}{F7}{F8}{F9}{F10}{F11}{F12}{Left}{Right}{Up}{Down}{Home}{End}{PgUp}{PgDn}{Del}{Ins}{BS}{CapsLock}{NumLock}{PrintScreen}{Pause}")
+; ih := InputHook("L1", "{a}{b}{j}")
+; ih.Start()
+; ToolTip("start")
+
+; ih.Wait()
+; ToolTip("wait")
+
+; ih.Stop()
+
+; ToolTip("stop")
+; ToolTip(ih.EndReason . " k:" . ih.EndKey)
+; EndKey Max
+
+;     Options := ""
+;     ih := InputHook(Options)
+;     if !InStr(Options, "V")
+;         ih.VisibleNonText := false
+;     ih.KeyOpt("{All}", "E")  ; 结束
+;     ; Exclude the modifiers
+;     ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-E")
+;     ih.Start()
+;     ih.Wait()
+;     ToolTip(ih.EndReason . " k:" . ih.EndKey)
+; }
 
 ;#region markdown
 $^k:: {
-    if (!WinActive("A")) {
-        return
-    }
+    ; if (!WinActive("A")) {
+    ;     return
+    ; }
 
-    Old := A_Clipboard
-    A_Clipboard := ""
-    Txt := ""
-
-    Send("^c")
     KeyWait "k"
 
     startTime := A_TickCount + 400
@@ -252,9 +284,15 @@ $^k:: {
         if KeyPressed(Keys)
         {
             ; ToolTip("break")
-            goto over
+            return
         }
     }
+
+    Old := A_Clipboard
+    A_Clipboard := ""
+    Txt := ""
+
+    Send("^c")
 
     if ClipWait(0.2)
     {
