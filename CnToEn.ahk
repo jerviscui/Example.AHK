@@ -389,6 +389,19 @@ IsCnIME(WinTitle := "A")
     }
 }
 
+; [] to 【】
+:?B0COZ:[]:: {
+    if IsCnIME()
+    {
+        SendInput("{Backspace}{Backspace}{U+005B}{U+005D}{Left}")
+    }
+    else {
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+3010}")
+    }
+}
+
 ; [ to 【
 :?B0COZ:[:: {
     if IsCnIME()
