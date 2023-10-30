@@ -13,14 +13,46 @@ A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
 ;#region Number output Numeric symbol and F1~F10
 ; time := DllCall("GetDoubleClickTime")
-time := 230
+time := 180
 
 DoubleClick(VK)
 {
     ; ToolTip(A_TimeSincePriorHotkey)
     if (A_PriorHotKey = A_ThisHotkey && A_TimeSincePriorHotkey > 100 && A_TimeSincePriorHotkey < time)
     {
-        Send("{Backspace}+" . VK)
+        ; Send("{Backspace}+" . VK)
+        Send("{Backspace}")
+        
+        if (VK = "1") {
+            Send("{U+0021}")
+        }
+        else if (VK = "2") {
+            Send("{U+0040}")
+        }
+        else if (VK = "3") {
+            Send("{U+0023}")
+        }
+        else if (VK = "4") {
+            Send("{U+0024}")
+        }
+        else if (VK = "5") {
+            Send("{U+0025}")
+        }
+        else if (VK = "6") {
+            Send("{U+005E}")
+        }
+        else if (VK = "7") {
+            Send("{U+0026}")
+        }
+        else if (VK = "8") {
+            Send("{U+002A}")
+        }
+        else if (VK = "9") {
+            Send("{U+0028}")
+        }
+        else if (VK = "0") {
+            Send("{U+0029}")
+        }
 
         return
     }
