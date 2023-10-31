@@ -22,7 +22,7 @@ DoubleClick(VK)
     {
         ; Send("{Backspace}+" . VK)
         Send("{Backspace}")
-        
+
         if (VK = "1") {
             Send("{U+0021}")
         }
@@ -307,7 +307,7 @@ $^k:: {
 
     KeyWait "k"
 
-    startTime := A_TickCount + 400
+    startTime := A_TickCount + 250
     Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     while startTime > A_TickCount
     {
@@ -344,17 +344,28 @@ $^k:: {
         Pos := InStr(Txt, "`n", 0, 1)
         Len := StrLen(Txt)
 
-        if (Pos = 0)
+        if (Pos = 0) ; 单行
         {
-            if (InStr(Txt, " ", 0, -1) = Len) {
-                SendInput("{U+0060}{U+0060}{Left}")
+            Space := InStr(Txt, " ", 0, -1)
+            if (Space = Len) {
+                SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
                 goto over
             }
+            else if (Space = 0) {
+                SendInput("{Shift Home}")
+                ; todo 选中后删除
+                goto over
+                ; SendInput("{BackSpace}")
+
+                ; Txt := "``" . Txt . "``"
+            }
             else {
-                Txt := "``" . Txt . "``"
+                ; SendInput("{Shift}{Home}{BackSpace}")
+
+                Txt := "``" . SubStr(Txt, Space + 1) . "``" 
             }
         }
-        else {
+        else { ; 多行
             Txt := "``````" . "`n" . Txt . "`n" . "``````"
         }
 
@@ -362,10 +373,10 @@ $^k:: {
         ClipWait
         Send("^v")
 
-        Sleep(200)
+        Sleep(100)
     }
     else {
-        SendInput("{U+0060}{U+0060}{Left}")
+        SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
     }
 
 over:
