@@ -300,15 +300,18 @@ KeyPressed(Keys) {
 ; }
 
 ;#region markdown
+
+global Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
 $^k:: {
     ; if (!WinActive("A")) {
     ;     return
     ; }
+    global Keys
 
     KeyWait "k"
 
     startTime := A_TickCount + 250
-    Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     while startTime > A_TickCount
     {
         Sleep(20)
@@ -325,44 +328,50 @@ $^k:: {
     Txt := ""
 
     Send("^c")
-
     if ClipWait(0.2)
     {
+        ; Obsidian 不带\r\n
+        ; VS Code 带\r\n
+
         Txt := A_Clipboard
         ; ToolTip(Txt)
     }
-    else {
+    else { ; 未选中或者不能复制行
         ; UE ""
-        ; Obsidian 不带\r\n
-        ; VS Code 带\r\n
+        ; ToolTip("no select")
+
+        SendInput("+{Home}")
+        Send("^c")
+        if ClipWait(0.2)
+        {
+            Txt := A_Clipboard
+        }
     }
 
-    if (Txt != "") {
-        Txt := RTrim(Txt, "`r`n")
-        Txt := RTrim(Txt, "`n")
+    Txt := RTrim(Txt, "`r`n")
+    Txt := RTrim(Txt, "`n")
 
+    if (Txt != "") {
         Pos := InStr(Txt, "`n", 0, 1)
         Len := StrLen(Txt)
 
         if (Pos = 0) ; 单行
         {
             Space := InStr(Txt, " ", 0, -1)
-            if (Space = Len) {
-                SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
+            if (Space = Len) { ; 空格结尾
+                SendInput("{End}{U+0060}{U+0060}{Left}")
                 goto over
             }
-            else if (Space = 0) {
-                SendInput("{Shift Home}")
-                ; todo 选中后删除
-                goto over
-                ; SendInput("{BackSpace}")
+            else if (Space = 0) { ; 没有空格
+                SendInput("+{Home}{BackSpace}")
 
-                ; Txt := "``" . Txt . "``"
+                Txt := "``" . Txt . "``"
             }
-            else {
-                ; SendInput("{Shift}{Home}{BackSpace}")
+            else { ; 中间有空格
+                LeftCount := Len - Space
+                SendInput("+{Left " . LeftCount . "}" . "{BackSpace}")
 
-                Txt := "``" . SubStr(Txt, Space + 1) . "``" 
+                Txt := "``" . SubStr(Txt, Space + 1) . "``"
             }
         }
         else { ; 多行
