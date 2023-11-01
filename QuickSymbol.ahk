@@ -349,7 +349,6 @@ $^k:: {
     }
 
     Txt := RTrim(Txt, "`r`n")
-    Txt := RTrim(Txt, "`n")
 
     if (Txt != "") {
         Pos := InStr(Txt, "`n", 0, 1)
@@ -375,6 +374,7 @@ $^k:: {
             }
         }
         else { ; 多行
+            Txt := LTrim(Txt, "`r`n")
             Txt := "``````" . "`n" . Txt . "`n" . "``````"
         }
 
