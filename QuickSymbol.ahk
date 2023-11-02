@@ -328,7 +328,7 @@ $^k:: {
     Txt := ""
 
     Send("^c")
-    if ClipWait(0.2)
+    if ClipWait(0.1)
     {
         ; Obsidian 不带\r\n
         ; VS Code 带\r\n
@@ -342,7 +342,7 @@ $^k:: {
 
         SendInput("+{Home}")
         Send("^c")
-        if ClipWait(0.2)
+        if ClipWait(0.1)
         {
             Txt := A_Clipboard
         }
@@ -382,7 +382,7 @@ $^k:: {
         ClipWait
         Send("^v")
 
-        Sleep(100)
+        Sleep(50)
     }
     else {
         SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
