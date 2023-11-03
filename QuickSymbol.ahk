@@ -362,11 +362,15 @@ $^k:: {
                 goto over
             }
             else if (Space = 0) { ; 没有空格
+                ; todo 选中内容会清空前面的内容！
+
                 SendInput("+{Home}{BackSpace}")
 
                 Txt := "``" . Txt . "``"
             }
             else { ; 中间有空格
+                ; todo 选中内容会删除选中前面的内容！
+
                 LeftCount := Len - Space
                 SendInput("+{Left " . LeftCount . "}" . "{BackSpace}")
 
