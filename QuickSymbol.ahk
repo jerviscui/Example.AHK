@@ -326,6 +326,8 @@ $^k:: {
     Old := A_Clipboard
     A_Clipboard := ""
     Txt := ""
+    Line := ""
+    Select := false
 
     Send("^c")
     if ClipWait(0.1)
@@ -335,6 +337,21 @@ $^k:: {
 
         Txt := A_Clipboard
         ; ToolTip(Txt)
+
+        ; 1. 选中内容复制
+        ; 2. 整行复制
+        A_Clipboard := ""
+        SendInput("{End}+{Home}")
+        Send("^c")
+        if ClipWait(0.1)
+        {
+            Line := A_Clipboard
+        }
+        SendInput("{End}")
+        ; 3. 比较，不相等，存在选中
+        if (Line != Txt) {
+            Select := true
+        }
     }
     else { ; 未选中或者不能复制行
         ; UE ""
@@ -356,25 +373,31 @@ $^k:: {
 
         if (Pos = 0) ; 单行
         {
-            Space := InStr(Txt, " ", 0, -1)
-            if (Space = Len) { ; 空格结尾
-                SendInput("{End}{U+0060}{U+0060}{Left}")
-                goto over
-            }
-            else if (Space = 0) { ; 没有空格
-                ; todo 选中内容会清空前面的内容！
-
+            if (Select) {
                 SendInput("+{Home}{BackSpace}")
 
-                Txt := "``" . Txt . "``"
+                ; 4. 选中则替换选中内容
+                Replace := "``" . Txt . "``"
+                Txt := StrReplace(Line, Txt, Replace)
+                ; ToolTip(Txt)
             }
-            else { ; 中间有空格
-                ; todo 选中内容会删除选中前面的内容！
+            else { ; 结尾触发
+                Space := InStr(Txt, " ", 0, -1)
+                if (Space = Len) { ; 空格结尾``
+                    SendInput("{End}{U+0060}{U+0060}{Left}")
+                    goto over
+                }
+                else if (Space = 0) { ; 没有空格
+                    SendInput("+{Home}{BackSpace}")
 
-                LeftCount := Len - Space
-                SendInput("+{Left " . LeftCount . "}" . "{BackSpace}")
+                    Txt := "``" . Txt . "``"
+                }
+                else { ; 中间有空格
+                    LeftCount := Len - Space
+                    SendInput("+{Left " . LeftCount . "}" . "{BackSpace}")
 
-                Txt := "``" . SubStr(Txt, Space + 1) . "``"
+                    Txt := "``" . SubStr(Txt, Space + 1) . "``"
+                }
             }
         }
         else { ; 多行
