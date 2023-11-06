@@ -341,7 +341,7 @@ $^k:: {
         ; 1. 选中内容复制
         ; 2. 整行复制
         A_Clipboard := ""
-        SendInput("{End}+{Home}")
+        SendInput("{End}+{Home 2}") ; fix 1. xxxx 
         Send("^c")
         if ClipWait(0.1)
         {
