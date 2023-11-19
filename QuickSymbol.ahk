@@ -344,7 +344,7 @@ $^k:: {
             ; 1. 选中内容复制
             ; 2. 整行复制
             A_Clipboard := ""
-            SendInput("{End}+{Home 2}") ; fix 单行文本折叠成多行
+            SendInput("{End 2}+{Home 2}") ; fix 单行文本折叠成多行
             Send("^c")
             if ClipWait(0.1)
             {
@@ -384,7 +384,7 @@ $^k:: {
         if (Pos = 0) ; 单行
         {
             if (Select) {
-                SendInput("+{Home}{BackSpace}")
+                SendInput("+{Home 2}{BackSpace}")
 
                 ; 4. 选中则替换选中内容
                 Replace := "``" . Txt . "``"
