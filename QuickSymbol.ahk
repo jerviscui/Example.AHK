@@ -344,7 +344,7 @@ $^k:: {
             ; 1. 选中内容复制
             ; 2. 整行复制
             A_Clipboard := ""
-            SendInput("{End}+{Home 2}") ; fix 1. xxxx
+            SendInput("{End}+{Home}") ; fix 1. xxxx
             Send("^c")
             if ClipWait(0.1)
             {
@@ -352,7 +352,13 @@ $^k:: {
             }
             SendInput("{End}")
             ; 3. 比较，不相等，存在选中
-            if (Line != Txt) {
+            if (InStr(Txt, "* ", 0, 1) = 1) {
+                Select := false
+            }
+            else if (InStr(Txt, ". ", 0, 1) = 2) {
+                Select := false
+            }
+            else if (Line != Txt) {
                 Select := true
             }
         }
