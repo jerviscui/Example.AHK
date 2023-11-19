@@ -344,13 +344,13 @@ $^k:: {
             ; 1. 选中内容复制
             ; 2. 整行复制
             A_Clipboard := ""
-            SendInput("{End}+{Home}") ; fix 1. xxxx
+            SendInput("{End}+{Home 2}") ; fix 单行文本折叠成多行
             Send("^c")
             if ClipWait(0.1)
             {
                 Line := A_Clipboard
             }
-            SendInput("{End}")
+            SendInput("{End 2}")
             ; 3. 比较，不相等，存在选中
             if (InStr(Txt, "* ", 0, 1) = 1) {
                 Select := false
@@ -398,9 +398,10 @@ $^k:: {
                     goto over
                 }
                 else if (Space = 0) { ; 没有空格
-                    SendInput("+{Home}{BackSpace}")
+                    goto over
 
-                    Txt := "``" . Txt . "``"
+                    ; SendInput("+{Home}{BackSpace}")
+                    ; Txt := "``" . Txt . "``"
                 }
                 else { ; 中间有空格
                     LeftCount := Len - Space
