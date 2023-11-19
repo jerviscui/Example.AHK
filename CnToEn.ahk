@@ -217,14 +217,16 @@ IsCnIME(WinTitle := "A")
 }
 
 ; "" to “”
-:?COZ:"":: {
+:?B0COZ:"":: {
     if IsCnIME()
     {
-        SendInput("{U+0022}{U+0022}{Left}")
+        SendInput("{Backspace 2}{U+0022}{U+0022}{Left}")
     }
     else
     {
-        SendInput("{U+201C}{U+201D}{Left}")
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+201C}{U+201D}{Left}")
     }
 }
 
