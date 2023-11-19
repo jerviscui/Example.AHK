@@ -338,19 +338,23 @@ $^k:: {
         Txt := A_Clipboard
         ; ToolTip(Txt)
 
-        ; 1. 选中内容复制
-        ; 2. 整行复制
-        A_Clipboard := ""
-        SendInput("{End}+{Home 2}") ; fix 1. xxxx 
-        Send("^c")
-        if ClipWait(0.1)
+        Pos := InStr(Txt, "`n", 0, 1)
+        if (Pos = 0) ; 单行
         {
-            Line := A_Clipboard
-        }
-        SendInput("{End}")
-        ; 3. 比较，不相等，存在选中
-        if (Line != Txt) {
-            Select := true
+            ; 1. 选中内容复制
+            ; 2. 整行复制
+            A_Clipboard := ""
+            SendInput("{End}+{Home 2}") ; fix 1. xxxx
+            Send("^c")
+            if ClipWait(0.1)
+            {
+                Line := A_Clipboard
+            }
+            SendInput("{End}")
+            ; 3. 比较，不相等，存在选中
+            if (Line != Txt) {
+                Select := true
+            }
         }
     }
     else { ; 未选中或者不能复制行
