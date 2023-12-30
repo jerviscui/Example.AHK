@@ -1,13 +1,13 @@
 ﻿/*
 Description = 中英文符号互换
 */
-#Requires AutoHotkey v2.0
+; #Requires AutoHotkey v2.0
 
-#SingleInstance Force
+; #SingleInstance Force
 
-; SendMode "Event"
-SetKeyDelay(-1, 0)
-A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
+; ; SendMode "Event"
+; SetKeyDelay(-1, 0)
+; A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
 ; 返回当前输入法的中英文状态
 IsCnIME(WinTitle := "A")

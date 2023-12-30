@@ -1,13 +1,13 @@
 ﻿/*
 Description = QMK OSD
 */
-#Requires AutoHotkey v2.0
+; #Requires AutoHotkey v2.0
 
-#SingleInstance Force
+; #SingleInstance Force
 
-; SendMode "Event"
-SetKeyDelay(-1, 0)
-A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
+; ; SendMode "Event"
+; SetKeyDelay(-1, 0)
+; A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
 MyGui := Gui("+LastFound +AlwaysOnTop +ToolWindow -Caption +Border +E0x08000000", "qmk status")
 MyGui.SetFont("s9 bold", "Microsoft YaHei")
