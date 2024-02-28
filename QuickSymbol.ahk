@@ -251,20 +251,18 @@ $0:: {
 }
 ;#endregion
 
+;#region markdown
 KeyPressed(Keys) {
     for k in Keys
     {
         if GetKeyState(k, "P")
         {
-            if (k = "k") {
-                Send("^k")
-                Send("^k")
-                return true
-            }
+            ; ToolTip(k)
 
-            ;todo 会先发送k再发送Ctrlk，如何吞掉k，或者考虑使用 InputHook
             Send("^k")
-            ; Send("^" . k)
+            Sleep(20)
+            Send("^" . k)
+
             return true
         }
     }
@@ -272,44 +270,53 @@ KeyPressed(Keys) {
     return false
 }
 
-; $^j:: {
-; ih := InputHook("L1", "{LControl}{RControl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}{AppsKey}{F1}{F2}{F3}{F4}{F5}{F6}{F7}{F8}{F9}{F10}{F11}{F12}{Left}{Right}{Up}{Down}{Home}{End}{PgUp}{PgDn}{Del}{Ins}{BS}{CapsLock}{NumLock}{PrintScreen}{Pause}")
-; ih := InputHook("L1", "{a}{b}{j}")
-; ih.Start()
-; ToolTip("start")
-
-; ih.Wait()
-; ToolTip("wait")
-
-; ih.Stop()
-
-; ToolTip("stop")
-; ToolTip(ih.EndReason . " k:" . ih.EndKey)
-; EndKey Max
-
-;     Options := ""
-;     ih := InputHook(Options)
-;     if !InStr(Options, "V")
-;         ih.VisibleNonText := false
-;     ih.KeyOpt("{All}", "E")  ; 结束
-;     ; Exclude the modifiers
-;     ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-E")
-;     ih.Start()
-;     ih.Wait()
-;     ToolTip(ih.EndReason . " k:" . ih.EndKey)
-; }
-
-;#region markdown
-
 global Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+global CtrKPressed := false
 
 $^k:: {
     ; if (!WinActive("A")) {
     ;     return
     ; }
-    global Keys
 
+    global CtrKPressed
+
+    if CtrKPressed
+    {
+        ; ToolTip("^k return")
+        return
+    }
+
+    CtrKPressed := true
     KeyWait "k"
+    SetTimer After250, -1
+}
+
+$^p::
+$^l::
+{
+    global CtrKPressed
+
+    ; ToolTip(A_PriorHotKey . " " . A_ThisHotkey . " " . ThisHotkey)
+
+    if CtrKPressed
+    {
+        ; ToolTip("CtrKPressed")
+        return
+    }
+
+    Key := A_ThisHotkey
+    Key := LTrim(Key, "$")
+
+    Send(Key)
+}
+
+After250() {
+    global Keys
+    global CtrKPressed
+
+    Old := A_Clipboard
+    A_Clipboard := ""
+    Txt := ""
 
     startTime := A_TickCount + 250
     while startTime > A_TickCount
@@ -319,13 +326,10 @@ $^k:: {
         if KeyPressed(Keys)
         {
             ; ToolTip("break")
-            return
+            goto over
         }
     }
 
-    Old := A_Clipboard
-    A_Clipboard := ""
-    Txt := ""
     Line := ""
     Select := false
 
@@ -430,5 +434,7 @@ over:
     Txt := ""
     A_Clipboard := Old
     Old := ""
+    SetTimer , 0  ; 即此处计时器关闭自己.
+    CtrKPressed := false
 }
 ;#endregion
