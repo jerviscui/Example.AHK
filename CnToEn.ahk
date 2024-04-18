@@ -478,14 +478,44 @@ IsCnIME(WinTitle := "A")
             Symbol := "0"
     }
 
-    if IsCnIME()
-    {
-        SendInput(Symbol . "{U+002E}{Space}")
+    SendInput(Symbol . "{U+002E}{Space}")
+}
+
+:*?COZ:.1::
+:*?COZ:.2::
+:*?COZ:.3::
+:*?COZ:.4::
+:*?COZ:.5::
+:*?COZ:.6::
+:*?COZ:.7::
+:*?COZ:.8::
+:*?COZ:.9::
+:*?COZ:.0::
+{
+    switch ThisHotkey {
+        case ":*?COZ:.1":
+            Symbol := "1"
+        case ":*?COZ:.2":
+            Symbol := "2"
+        case ":*?COZ:.3":
+            Symbol := "3"
+        case ":*?COZ:.4":
+            Symbol := "4"
+        case ":*?COZ:.5":
+            Symbol := "5"
+        case ":*?COZ:.6":
+            Symbol := "6"
+        case ":*?COZ:.7":
+            Symbol := "7"
+        case ":*?COZ:.8":
+            Symbol := "8"
+        case ":*?COZ:.9":
+            Symbol := "9"
+        case ":*?COZ:.0":
+            Symbol := "0"
     }
-    else {
-        SendInput(Symbol . "{U+002E}{Space}")
-        ; SendInput(Symbol . "{U+3002}{Space}")
-    }
+
+    SendInput("{U+002E}" . Symbol)
 }
 
 ;#region select text to convert en punctuation
