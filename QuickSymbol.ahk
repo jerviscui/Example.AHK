@@ -53,6 +53,9 @@ DoubleClick(VK)
         else if (VK = "0") {
             Send("{U+0029}")
         }
+        else if (VK = "-") {
+            Send("{U+005F}")
+        }
 
         return
     }
@@ -248,6 +251,14 @@ $0:: {
     }
 
     DoubleClick("0")
+}
+$-:: {
+    if Pressed
+    {
+        return
+    }
+
+    DoubleClick("-")
 }
 ;#endregion
 
