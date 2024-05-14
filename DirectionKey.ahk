@@ -13,6 +13,18 @@ SendMode "Event"
 SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
+; 屏蔽 Alt 原有功能，貌似还是会激活菜单栏
+; https://www.autohotkey.com/boards/viewtopic.php?p=354621&sid=bc25eb5f19d3e62bd022881b16208519#p354621
+!x:: Reload
+*Alt:: Send '{Blind}{Alt down}'
+*Alt up:: {
+    if InStr(A_PriorKey, "Alt")
+        Send '{Blind}{Ctrl}{Alt up}'  ; "Mask" the Alt-up event.
+    else
+        Send '{Blind}{Alt up}'
+    return
+}
+
 ;#region Windows Virtual Desktop
 $#-:: {
     Send("#^{Left}")
@@ -23,30 +35,29 @@ $#=:: {
 }
 ;#endregion
 
-; $!i:: Send "{Up}"
-; $!j:: Send "{Left}"
-; $!k:: Send "{Down}"
-; $!l:: Send "{Right}"
+$!i:: Send "{Up}"
+$!j:: Send "{Left}"
+$!k:: Send "{Down}"
+$!l:: Send "{Right}"
 
 ; $!e:: Send "{Up}"
 ; $!s:: Send "{Left}"
 ; $!d:: Send "{Down}"
 ; $!f:: Send "{Right}"
 
-; $!y:: Send "{Home}"
-; $!u:: Send "{End}"
-
-; $!n:: Send "{PgDn}"
-; $!p:: Send "{PgUp}"
+$!y:: Send "{Home}"
+$!u:: Send "{End}"
+$!n:: Send "{PgDn}"
+$!p:: Send "{PgUp}"
 
 ; 左Win键+鼠标滚轮切换虚拟桌面
-<#WheelUp:: #^Left
-<#WheelDown:: #^Right
+<#WheelUp::#^Left
+<#WheelDown::#^Right
 
 ; 左Alt键+鼠标滚轮切换窗口
 ; <!WheelUp:: ShiftAltTab
 ; <!WheelDown:: AltTab
 
 ;Browser_Forward & Browser_Back
-XButton2:: !Right
-XButton1:: !Left
+XButton2::!Right
+XButton1::!Left
