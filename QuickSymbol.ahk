@@ -73,12 +73,12 @@ $F12:: {
 
     Count := Count + 1
 
-    if (Count >= 2) {
-        Count := 0
-        Pressed := false
-        Send("{F13}")
-        return
-    }
+    ; if (Count >= 2) {
+    ;     Count := 0
+    ;     Pressed := false
+    ;     Send("{F14}")
+    ;     return
+    ; }
 
     Pressed := true
     startTime := A_TickCount + 400
@@ -171,6 +171,10 @@ $F12:: {
     Send("{F12}")
 }
 #MaxThreadsPerHotkey 1
+
+$F13:: {
+    Send("^!n}")
+}
 
 $1:: {
     if Pressed
