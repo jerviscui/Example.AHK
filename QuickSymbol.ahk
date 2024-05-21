@@ -172,9 +172,11 @@ $F12:: {
 }
 #MaxThreadsPerHotkey 1
 
+#HotIf WinActive("ahk_exe devenv.exe")
 $F13:: {
     Send("^!n}")
 }
+#HotIf
 
 $1:: {
     if Pressed
