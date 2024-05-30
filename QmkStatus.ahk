@@ -9,6 +9,8 @@ Description = QMK OSD
 ; SetKeyDelay(-1, 0)
 ; A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
+;#region Status Gui
+
 MyGui := Gui("+LastFound +AlwaysOnTop +ToolWindow -Caption +Border +E0x08000000", "qmk status")
 MyGui.SetFont("s9 bold", "Microsoft YaHei")
 MyGui.MarginX := 5
@@ -70,6 +72,7 @@ F15 & 0:: {
 }
 
 ;#region OSM
+
 F16 & 1:: {
     global OSM
 
@@ -196,9 +199,62 @@ GetSize(&Content, &W, &H) {
     tmpGui.Destroy()
 }
 
+;#endregion
+
 ;#region typewriter
-; $Enter:: {
-;     Send("{Enter}")
-;     Send("^{Down}")
-; }
+
+global Typewriter := 0
+
+Ctrl & F13:: {
+    global Typewriter
+
+    if (Typewriter) {
+        Typewriter := 0
+        ToolTip "0"
+
+    }
+    else {
+        Typewriter := 1
+        ToolTip "1"
+
+    }
+
+    ; Show()
+}
+
+#HotIf WinActive("ahk_exe devenv.exe")
+$Enter:: {
+    if (Typewriter) {
+        Send("{Enter}")
+        Send "{F13 down}"
+        Send("h")
+        Send "{F13 up}"
+    }
+    else {
+        Send("{Enter}")
+    }
+}
+
+$Up:: {
+    if (Typewriter) {
+        Send("{Up}")
+        Send("{F13}h")
+        Sleep 1000
+    }
+    else {
+        Send("{Up}")
+    }
+}
+
+$Down:: {
+    if (Typewriter) {
+        Send("{Down}")
+        Send("{F13}h")
+    }
+    else {
+        Send("{Down}")
+    }
+}
+#HotIf
+
 ;#endregion

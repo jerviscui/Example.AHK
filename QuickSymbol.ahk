@@ -7,7 +7,7 @@ Description = 快速输出数字键对应的符号和F键
 
 CoordMode "ToolTip", "Screen"
 
-SendMode "Event"
+; SendMode "Event"
 SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
@@ -173,7 +173,7 @@ $F12:: {
 #MaxThreadsPerHotkey 1
 
 #HotIf WinActive("ahk_exe devenv.exe")
-$F13:: {
+F13 & q:: {
     Send("^!n")
 }
 #HotIf
