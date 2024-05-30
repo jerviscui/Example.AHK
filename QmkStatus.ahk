@@ -195,3 +195,10 @@ GetSize(&Content, &W, &H) {
     tmpTxt.GetPos(&x, &y, &W, &H)
     tmpGui.Destroy()
 }
+
+;#region typewriter
+; $Enter:: {
+;     Send("{Enter}")
+;     Send("^{Down}")
+; }
+;#endregion

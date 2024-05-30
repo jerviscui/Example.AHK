@@ -174,7 +174,7 @@ $F12:: {
 
 #HotIf WinActive("ahk_exe devenv.exe")
 $F13:: {
-    Send("^!n}")
+    Send("^!n")
 }
 #HotIf
 
