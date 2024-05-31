@@ -149,6 +149,16 @@ Show() {
     ;layer
     value := Layer
 
+    ; typewriter
+    if (Typewriter) {
+        if (StrLen(value)) {
+            value := "ON" . "`n" . value
+        }
+        else {
+            value := "ON"
+        }
+    }
+
     ;swap
     if (StrLen(Swap)) {
         if (StrLen(value)) {
@@ -210,16 +220,12 @@ Ctrl & F13:: {
 
     if (Typewriter) {
         Typewriter := 0
-        ToolTip "0"
-
     }
     else {
         Typewriter := 1
-        ToolTip "1"
-
     }
 
-    ; Show()
+    Show()
 }
 
 #HotIf WinActive("ahk_exe devenv.exe")
@@ -228,6 +234,7 @@ $Enter:: {
         Send("{Enter}")
         Send "{F13 down}"
         Send("h")
+        Sleep 1
         Send "{F13 up}"
     }
     else {
@@ -238,8 +245,10 @@ $Enter:: {
 $Up:: {
     if (Typewriter) {
         Send("{Up}")
-        Send("{F13}h")
-        Sleep 1000
+        Send "{F13 down}"
+        Send("h")
+        Sleep 1
+        Send "{F13 up}"
     }
     else {
         Send("{Up}")
@@ -249,7 +258,10 @@ $Up:: {
 $Down:: {
     if (Typewriter) {
         Send("{Down}")
-        Send("{F13}h")
+        Send "{F13 down}"
+        Send("h")
+        Sleep 1
+        Send "{F13 up}"
     }
     else {
         Send("{Down}")
