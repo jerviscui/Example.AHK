@@ -232,10 +232,7 @@ Ctrl & F13:: {
 $Enter:: {
     if (Typewriter) {
         Send("{Enter}")
-        Send "{F13 down}"
-        Send("h")
-        Sleep 1
-        Send "{F13 up}"
+        Send("{F13 2}")
     }
     else {
         Send("{Enter}")
@@ -245,10 +242,7 @@ $Enter:: {
 $Up:: {
     if (Typewriter) {
         Send("{Up}")
-        Send "{F13 down}"
-        Send("h")
-        Sleep 1
-        Send "{F13 up}"
+        Send("{F13 2}")
     }
     else {
         Send("{Up}")
@@ -258,10 +252,7 @@ $Up:: {
 $Down:: {
     if (Typewriter) {
         Send("{Down}")
-        Send "{F13 down}"
-        Send("h")
-        Sleep 1
-        Send "{F13 up}"
+        Send("{F13 2}")
     }
     else {
         Send("{Down}")
