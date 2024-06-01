@@ -518,6 +518,19 @@ IsCnIME(WinTitle := "A")
     SendInput("{U+002E}" . Symbol)
 }
 
+:?COZ:cui2:: {
+    Send("cuijervis@126.com")
+}
+
+:?COZ:sj:: {
+    TimeString := FormatTime(, "yyyy-MM-dd hh:mm:ss")
+    Send(TimeString)
+}
+:?COZ:rq:: {
+    TimeString := FormatTime(, "yyyy-MM-dd")
+    Send(TimeString)
+}
+
 ;#region select text to convert en punctuation
 ToFullWidth := Map(
     ",", "，",
