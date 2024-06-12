@@ -229,6 +229,15 @@ Ctrl & F13:: {
 }
 
 #HotIf WinActive("ahk_exe devenv.exe")
+F13 & q:: {
+    Send("^!n")
+}
+
+; 恢复 F13 功能
+$F13:: {
+    Send("{F13}")
+}
+
 $Enter:: {
     if (Typewriter) {
         Send("{Enter}")

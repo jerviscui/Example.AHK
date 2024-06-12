@@ -172,17 +172,6 @@ $F12:: {
 }
 #MaxThreadsPerHotkey 1
 
-#HotIf WinActive("ahk_exe devenv.exe")
-F13 & q:: {
-    Send("^!n")
-}
-
-; 恢复 F13 功能
-$F13:: {
-    Send("{F13}")
-}
-#HotIf
-
 $1:: {
     if Pressed
     {
