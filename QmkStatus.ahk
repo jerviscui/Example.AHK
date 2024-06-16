@@ -270,3 +270,8 @@ $Down:: {
 #HotIf
 
 ;#endregion
+
+$!e:: Send "{Up}"
+$!s:: Send "{Left}"
+$!d:: Send "{Down}"
+$!f:: Send "{Right}"
