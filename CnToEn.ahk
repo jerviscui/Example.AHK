@@ -481,41 +481,162 @@ IsCnIME(WinTitle := "A")
     SendInput(Symbol . "{U+002E}{Space}")
 }
 
-:*?COZ:.1::
-:*?COZ:.2::
-:*?COZ:.3::
-:*?COZ:.4::
-:*?COZ:.5::
-:*?COZ:.6::
-:*?COZ:.7::
-:*?COZ:.8::
-:*?COZ:.9::
-:*?COZ:.0::
+:*?COZ:1.1::
+:*?COZ:2.1::
+:*?COZ:3.1::
+:*?COZ:4.1::
+:*?COZ:5.1::
+:*?COZ:6.1::
+:*?COZ:7.1::
+:*?COZ:8.1::
+:*?COZ:9.1::
+:*?COZ:0.1::
+:*?COZ:1.2::
+:*?COZ:2.2::
+:*?COZ:3.2::
+:*?COZ:4.2::
+:*?COZ:5.2::
+:*?COZ:6.2::
+:*?COZ:7.2::
+:*?COZ:8.2::
+:*?COZ:9.2::
+:*?COZ:0.2::
+:*?COZ:1.3::
+:*?COZ:2.3::
+:*?COZ:3.3::
+:*?COZ:4.3::
+:*?COZ:5.3::
+:*?COZ:6.3::
+:*?COZ:7.3::
+:*?COZ:8.3::
+:*?COZ:9.3::
+:*?COZ:0.3::
+:*?COZ:1.4::
+:*?COZ:2.4::
+:*?COZ:3.4::
+:*?COZ:4.4::
+:*?COZ:5.4::
+:*?COZ:6.4::
+:*?COZ:7.4::
+:*?COZ:8.4::
+:*?COZ:9.4::
+:*?COZ:0.4::
+:*?COZ:1.5::
+:*?COZ:2.5::
+:*?COZ:3.5::
+:*?COZ:4.5::
+:*?COZ:5.5::
+:*?COZ:6.5::
+:*?COZ:7.5::
+:*?COZ:8.5::
+:*?COZ:9.5::
+:*?COZ:0.5::
+:*?COZ:1.6::
+:*?COZ:2.6::
+:*?COZ:3.6::
+:*?COZ:4.6::
+:*?COZ:5.6::
+:*?COZ:6.6::
+:*?COZ:7.6::
+:*?COZ:8.6::
+:*?COZ:9.6::
+:*?COZ:0.6::
+:*?COZ:1.7::
+:*?COZ:2.7::
+:*?COZ:3.7::
+:*?COZ:4.7::
+:*?COZ:5.7::
+:*?COZ:6.7::
+:*?COZ:7.7::
+:*?COZ:8.7::
+:*?COZ:9.7::
+:*?COZ:0.7::
+:*?COZ:1.8::
+:*?COZ:2.8::
+:*?COZ:3.8::
+:*?COZ:4.8::
+:*?COZ:5.8::
+:*?COZ:6.8::
+:*?COZ:7.8::
+:*?COZ:8.8::
+:*?COZ:9.8::
+:*?COZ:0.8::
+:*?COZ:1.9::
+:*?COZ:2.9::
+:*?COZ:3.9::
+:*?COZ:4.9::
+:*?COZ:5.9::
+:*?COZ:6.9::
+:*?COZ:7.9::
+:*?COZ:8.9::
+:*?COZ:9.9::
+:*?COZ:0.9::
+:*?COZ:1.0::
+:*?COZ:2.0::
+:*?COZ:3.0::
+:*?COZ:4.0::
+:*?COZ:5.0::
+:*?COZ:6.0::
+:*?COZ:7.0::
+:*?COZ:8.0::
+:*?COZ:9.0::
+:*?COZ:0.0::
 {
-    switch ThisHotkey {
-        case ":*?COZ:.1":
+    ; :*?COZ:0.0
+    Str := ThisHotkey
+
+    Arr := StrSplit(Str, ".")
+    ; ToolTip(Arr[2])
+    switch Arr[2] {
+        case "1":
             Symbol := "1"
-        case ":*?COZ:.2":
+        case "2":
             Symbol := "2"
-        case ":*?COZ:.3":
+        case "3":
             Symbol := "3"
-        case ":*?COZ:.4":
+        case "4":
             Symbol := "4"
-        case ":*?COZ:.5":
+        case "5":
             Symbol := "5"
-        case ":*?COZ:.6":
+        case "6":
             Symbol := "6"
-        case ":*?COZ:.7":
+        case "7":
             Symbol := "7"
-        case ":*?COZ:.8":
+        case "8":
             Symbol := "8"
-        case ":*?COZ:.9":
+        case "9":
             Symbol := "9"
-        case ":*?COZ:.0":
+        case "0":
             Symbol := "0"
     }
 
-    SendInput("{U+002E}" . Symbol)
+    ; :*?COZ:0
+    PreArr := StrSplit(Arr[1], ":")
+    ; ToolTip(PreArr[3])
+    switch PreArr[3] {
+        case "1":
+            Pre := "1"
+        case "2":
+            Pre := "2"
+        case "3":
+            Pre := "3"
+        case "4":
+            Pre := "4"
+        case "5":
+            Pre := "5"
+        case "6":
+            Pre := "6"
+        case "7":
+            Pre := "7"
+        case "8":
+            Pre := "8"
+        case "9":
+            Pre := "9"
+        case "0":
+            Pre := "0"
+    }
+
+    SendInput(Pre . "{U+002E}" . Symbol)
 }
 
 :?COZ:cui2:: {
