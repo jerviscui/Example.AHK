@@ -285,10 +285,6 @@ global Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
 global CtrKPressed := false
 
 $^k:: {
-    ; if (!WinActive("A")) {
-    ;     return
-    ; }
-
     global CtrKPressed
 
     if CtrKPressed
