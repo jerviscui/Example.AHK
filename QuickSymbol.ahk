@@ -448,4 +448,146 @@ over:
     SetTimer , 0  ; 即此处计时器关闭自己.
     CtrKPressed := false
 }
+
+#HotIf WinActive("ahk_exe Obsidian.exe")
+$^k:: {
+    Obsidian_After250()
+}
+
+Obsidian_After250() {
+    Old := A_Clipboard
+    A_Clipboard := ""
+    Txt := ""
+    Line := ""
+    Select := false
+
+    Send("^c")
+    KeyWait "k"
+    if ClipWait(0.250)
+    {
+        ; Obsidian 不带\r\n
+        Txt := A_Clipboard
+        A_Clipboard := ""
+        ; ToolTip(Txt)
+        ; Sleep(1000)
+
+        Len := StrLen(Txt)
+        Pos := InStr(Txt, "`n", 0, 1)
+
+        if (Pos > 0) ; 多行
+        {
+            Txt := LTrim(Txt, "`r`n")
+            Txt := "``````" . "`n" . Txt . "`n" . "``````"
+
+            A_Clipboard := Txt
+            ClipWait
+            Send("^v")
+            Sleep(50)
+
+            goto over
+        }
+        ; else 单行
+        if (InStr(Txt, "* ", 0, 1) > 0) {
+            Select := false
+        }
+        else if (InStr(Txt, ". ", 0, 1) > 0) {
+            Select := false
+        }
+        else {
+            SendInput("+{End 2}") ; 复制光标之后，兼容单行文本折叠成多行
+            Send("^c")
+            if ClipWait(1)
+            {
+                Line := A_Clipboard
+                A_Clipboard := ""
+                ; ToolTip("Line: " . Line)
+                ; Sleep(1000)
+
+                ; line end or start
+                if (Len = StrLen(Line)) {
+                    Send("{Left}")
+                    SendInput("+{End 2}")
+                    Send("^c")
+                    if ClipWait(1) {
+                        Last := A_Clipboard
+                        A_Clipboard := ""
+                        ; ToolTip("Last: " . Last)
+                        ; Sleep(1000)
+
+                        ; line start
+                        if (Len = StrLen(Last)) {
+                            ; ToolTip("start: " . Last)
+                            ; Sleep(1000)
+
+                            Send("{Left}")
+                            Select := false
+                        }
+                        ; line end
+                        else {
+                            ; ToolTip("end: " . Last)
+                            ; Sleep(1000)
+
+                            Send("{Right}")
+                            Select := false
+                        }
+                    }
+                    else {
+                        goto over
+                    }
+                }
+                ; line middle
+                else {
+                    Send("{Left}")
+                    Send("^c")
+                    if ClipWait(1)
+                    {
+                        Line := A_Clipboard
+                        A_Clipboard := ""
+                        ; no select
+                        if (Len = StrLen(Line)) {
+                            ; ToolTip("no: " . Line)
+                            ; Sleep(1000)
+
+                            Select := false
+                        }
+                        else {
+                            Select := true
+
+                            SendInput("{Del " . Len . "}")
+                            Sleep(50)
+                            SendInput("{U+0060}")
+                            A_Clipboard := Txt
+                            ClipWait
+                            Send("^v")
+                            Sleep(50)
+                            SendInput("{U+0060}")
+                        }
+                    }
+                    else {
+                        goto over
+                    }
+                }
+            }
+            else {
+                goto over
+            }
+        }
+
+        if Select = false
+        {
+            ; 光标加行内标记
+            SendInput("{U+0060}{U+0060}{Left}")
+        }
+    }
+    ; empty line
+    else {
+        SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
+    }
+
+over:
+    Txt := ""
+    A_Clipboard := Old
+    Old := ""
+}
+#HotIf
 ;#endregion
