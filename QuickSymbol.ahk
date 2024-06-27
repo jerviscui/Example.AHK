@@ -494,6 +494,8 @@ Obsidian_After250() {
             Select := false
         }
         else {
+            Right := ""
+
             SendInput("{Right}")
             SendInput("+{End 2}") ; 复制光标之后，兼容单行文本折叠成多行
             Send("^c")
@@ -501,6 +503,7 @@ Obsidian_After250() {
             {
                 Line := A_Clipboard
                 A_Clipboard := ""
+                Right := Line
                 ; ToolTip("Line: " . Line)
                 ; Sleep(1000)
 
@@ -554,10 +557,16 @@ Obsidian_After250() {
                         else {
                             Select := true
 
-                            SendInput("+{Left " . Len . "}")
-                            SendInput("{Del}")
+                            ; all
+                            ; right index
 
-                            Txt := "``" . Txt . "``"
+
+                            ; SendInput("+{Left " . Len . "}")
+                            SendInput("{Left " . Len . "}")
+                            ; SendInput("{Del}")
+                            SendInput("+{End 2}")
+
+                            Txt := "``" . Txt . "``" . Right
                             A_Clipboard := Txt
                             ClipWait
                             Send("^v")
