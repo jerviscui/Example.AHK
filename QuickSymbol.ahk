@@ -494,9 +494,10 @@ Obsidian_After250() {
             Select := false
         }
         else {
+            SendInput("{Right}")
             SendInput("+{End 2}") ; 复制光标之后，兼容单行文本折叠成多行
             Send("^c")
-            if ClipWait(1)
+            if ClipWait(0.100)
             {
                 Line := A_Clipboard
                 A_Clipboard := ""
@@ -505,8 +506,8 @@ Obsidian_After250() {
 
                 ; line end or start
                 if (Len = StrLen(Line)) {
-                    Send("{Left}")
-                    SendInput("+{End 2}")
+                    SendInput("{Left 2}")
+                    SendInput("+{Home 2}")
                     Send("^c")
                     if ClipWait(1) {
                         Last := A_Clipboard
@@ -519,15 +520,14 @@ Obsidian_After250() {
                             ; ToolTip("start: " . Last)
                             ; Sleep(1000)
 
-                            Send("{Left}")
                             Select := false
                         }
-                        ; line end
+                        ; at last one char
                         else {
                             ; ToolTip("end: " . Last)
                             ; Sleep(1000)
 
-                            Send("{Right}")
+                            SendInput("{Right 2}")
                             Select := false
                         }
                     }
@@ -537,7 +537,7 @@ Obsidian_After250() {
                 }
                 ; line middle
                 else {
-                    Send("{Left}")
+                    SendInput("{Left}")
                     Send("^c")
                     if ClipWait(1)
                     {
@@ -548,19 +548,20 @@ Obsidian_After250() {
                             ; ToolTip("no: " . Line)
                             ; Sleep(1000)
 
+                            SendInput("{Left}")
                             Select := false
                         }
                         else {
                             Select := true
 
-                            SendInput("{Del " . Len . "}")
-                            Sleep(50)
-                            SendInput("{U+0060}")
+                            SendInput("+{Left " . Len . "}")
+                            SendInput("{Del}")
+
+                            Txt := "``" . Txt . "``"
                             A_Clipboard := Txt
                             ClipWait
                             Send("^v")
                             Sleep(50)
-                            SendInput("{U+0060}")
                         }
                     }
                     else {
@@ -569,7 +570,9 @@ Obsidian_After250() {
                 }
             }
             else {
-                goto over
+                ; line end
+                SendInput("{Left}")
+                Select := false
             }
         }
 
