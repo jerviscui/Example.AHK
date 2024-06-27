@@ -557,13 +557,7 @@ Obsidian_After250() {
                         else {
                             Select := true
 
-                            ; all
-                            ; right index
-
-
-                            ; SendInput("+{Left " . Len . "}")
                             SendInput("{Left " . Len . "}")
-                            ; SendInput("{Del}")
                             SendInput("+{End 2}")
 
                             Txt := "``" . Txt . "``" . Right
