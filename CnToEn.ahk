@@ -639,17 +639,31 @@ IsCnIME(WinTitle := "A")
     SendInput(Pre . "{U+002E}" . Symbol)
 }
 
-:?COZ:cui2:: {
-    Send("cuijervis@126.com")
+:?B0COZ:cui2:: {
+    if IsCnIME()
+    {
+        Send("{BackSpace 1}")
+        SendInput("cuijervis@126.com")
+    }
+    else {
+        Send("{BackSpace 3}")
+        SendInput("cuijervis@126.com")
+    }
 }
 
 :?COZ:sj:: {
     TimeString := FormatTime(, "yyyy-MM-dd hh:mm:ss")
-    Send(TimeString)
+    ; ToolTip(TimeString)
+    if IsCnIME()
+    {
+        TimeString := StrReplace(TimeString, ":", "{U+003A}")
+    }
+    SendInput(TimeString)
 }
+
 :?COZ:rq:: {
     TimeString := FormatTime(, "yyyy-MM-dd")
-    Send(TimeString)
+    SendInput(TimeString)
 }
 
 ;#region select text to convert en punctuation
