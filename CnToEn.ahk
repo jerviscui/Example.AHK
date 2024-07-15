@@ -9,6 +9,11 @@ Description = 中英文符号互换
 ; SetKeyDelay(-1, 0)
 ; A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
+global KeyboardLayoutId := Map(
+    "cn", 134481924, ;微软拼音
+    "en", 67699721, ;英文
+)
+
 ; 返回当前输入法的中英文状态
 IsCnIME(WinTitle := "A")
 {
@@ -19,19 +24,25 @@ IsCnIME(WinTitle := "A")
         return
     }
 
-    DetectHiddenWindows True
+    origin_detect_hidden_window := A_DetectHiddenWindows
+    DetectHiddenWindows(True)
+    ThreadID := DllCall("GetWindowThreadProcessId", "UInt", hWnd, "UInt", 0)
+    InputLocaleID := DllCall("GetKeyboardLayout", "UInt", ThreadID, "UInt")
+
     result := SendMessage(
         0x283,  ; Message : WM_IME_CONTROL
-        0x005,  ; wParam  : IMC_GETOPENSTATUS
+        0x001,  ; wParam : IMC_GETCONVERSIONMODE
+        ; 0x005,  ; wParam  : IMC_GETOPENSTATUS
         0,      ; lParam  ： (NoArgs)
         ,       ; Control ： (Window)
         "ahk_id " DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
     )
-    DetectHiddenWindows False
+    DetectHiddenWindows(origin_detect_hidden_window)
 
+    ; 微软拼音（英-中）0/1024-1/1025
     ; 1 非英文状态
     ; 0 英文状态
-    return result
+    return (InputLocaleID == KeyboardLayoutId["cn"] and result == 1025)
 }
 
 #Hotstring EndChars `t
@@ -444,41 +455,51 @@ IsCnIME(WinTitle := "A")
     }
 }
 
-:*?COZ:1. ::
-:*?COZ:2. ::
-:*?COZ:3. ::
-:*?COZ:4. ::
-:*?COZ:5. ::
-:*?COZ:6. ::
-:*?COZ:7. ::
-:*?COZ:8. ::
-:*?COZ:9. ::
-:*?COZ:0. ::
+:*?B0COZ:1. ::
+:*?B0COZ:2. ::
+:*?B0COZ:3. ::
+:*?B0COZ:4. ::
+:*?B0COZ:5. ::
+:*?B0COZ:6. ::
+:*?B0COZ:7. ::
+:*?B0COZ:8. ::
+:*?B0COZ:9. ::
+:*?B0COZ:0. ::
 {
-    switch ThisHotkey {
-        case ":*?COZ:1. ":
-            Symbol := "1"
-        case ":*?COZ:2. ":
-            Symbol := "2"
-        case ":*?COZ:3. ":
-            Symbol := "3"
-        case ":*?COZ:4. ":
-            Symbol := "4"
-        case ":*?COZ:5. ":
-            Symbol := "5"
-        case ":*?COZ:6. ":
-            Symbol := "6"
-        case ":*?COZ:7. ":
-            Symbol := "7"
-        case ":*?COZ:8. ":
-            Symbol := "8"
-        case ":*?COZ:9. ":
-            Symbol := "9"
-        case ":*?COZ:0. ":
-            Symbol := "0"
-    }
+    if IsCnIME()
+    {
+        ToolTip("中文输入法")
 
-    SendInput(Symbol . "{U+002E}{Space}")
+        SendInput("{BackSpace 1}")
+
+        Old := A_Clipboard
+        A_Clipboard := ""
+
+        SendInput("+{Left}")
+        Send("^c")
+        if ClipWait(0.100)
+        {
+            Txt := A_Clipboard
+            A_Clipboard := ""
+
+            switch Txt {
+                case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
+                    SendInput("{Right}{U+002E}{Space}")
+                default:
+                    SendInput("{Right}{U+3002}")
+            }
+        }
+        else
+        {
+            SendInput("{Right}")
+        }
+
+        A_Clipboard := Old
+    }
+    else
+    {
+        SendInput("{Space}")
+    }
 }
 
 :*?COZ:1.1::
