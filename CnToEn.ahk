@@ -468,8 +468,6 @@ IsCnIME(WinTitle := "A")
 {
     if IsCnIME()
     {
-        ToolTip("中文输入法")
-
         SendInput("{BackSpace 1}")
 
         Old := A_Clipboard
