@@ -559,11 +559,15 @@ Obsidian_After250() {
 
                             SendInput("{Left " . Len . "}")
                             SendInput("+{End 2}")
+                            Sleep(Len * 3)
 
                             Txt := "``" . Txt . "``" . Right
+                            ; ToolTip("Txt: " . Txt, , 10, 2)
                             A_Clipboard := Txt
                             ClipWait
+                            ; ToolTip("A_Clipboard: " . A_Clipboard, , 40, 3)
                             Send("^v")
+                            ; ToolTip("pasted", , 60, 1)
                             Sleep(50)
                         }
                     }
