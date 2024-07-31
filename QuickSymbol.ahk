@@ -557,6 +557,12 @@ Obsidian_After250() {
                         else {
                             Select := true
 
+                            ; at last one char
+                            if (Line = Right) {
+                                SendInput("{Right}")
+                                Right := ""
+                            }
+
                             SendInput("{Left " . Len . "}")
                             SendInput("+{End 2}")
                             Sleep(Len * 3)
@@ -568,7 +574,8 @@ Obsidian_After250() {
                             ; ToolTip("A_Clipboard: " . A_Clipboard, , 40, 3)
                             Send("^v")
                             ; ToolTip("pasted", , 60, 1)
-                            Sleep(50)
+                            Sleep(Len * 3)
+                            ; Sleep(50)
                         }
                     }
                     else {
