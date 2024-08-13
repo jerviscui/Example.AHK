@@ -263,191 +263,191 @@ $-:: {
 ;#endregion
 
 ;#region markdown
-KeyPressed(Keys) {
-    for k in Keys
-    {
-        if GetKeyState(k, "P")
-        {
-            ; ToolTip(k)
+; KeyPressed(Keys) {
+;     for k in Keys
+;     {
+;         if GetKeyState(k, "P")
+;         {
+;             ; ToolTip(k)
 
-            Send("^k")
-            Sleep(20)
-            Send("^" . k)
+;             Send("^k")
+;             Sleep(20)
+;             Send("^" . k)
 
-            return true
-        }
-    }
+;             return true
+;         }
+;     }
 
-    return false
-}
+;     return false
+; }
 
-global Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-global CtrKPressed := false
+; global Keys := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+; global CtrKPressed := false
 
-$^k:: {
-    global CtrKPressed
+; $^k:: {
+;     global CtrKPressed
 
-    if CtrKPressed
-    {
-        ; ToolTip("^k return")
-        return
-    }
+;     if CtrKPressed
+;     {
+;         ; ToolTip("^k return")
+;         return
+;     }
 
-    CtrKPressed := true
-    KeyWait "k"
-    SetTimer After250, -1
-}
+;     CtrKPressed := true
+;     KeyWait "k"
+;     SetTimer After250, -1
+; }
 
-$^c::
-$^u::
-$^i::
-$^s::
-$^p::
-$^l::
-{
-    global CtrKPressed
+; $^c::
+; $^u::
+; $^i::
+; $^s::
+; $^p::
+; $^l::
+; {
+;     global CtrKPressed
 
-    ; ToolTip(A_PriorHotKey . " " . A_ThisHotkey . " " . ThisHotkey)
+;     ; ToolTip(A_PriorHotKey . " " . A_ThisHotkey . " " . ThisHotkey)
 
-    if CtrKPressed
-    {
-        ; ToolTip("CtrKPressed")
-        return
-    }
+;     if CtrKPressed
+;     {
+;         ; ToolTip("CtrKPressed")
+;         return
+;     }
 
-    Key := A_ThisHotkey
-    Key := LTrim(Key, "$")
+;     Key := A_ThisHotkey
+;     Key := LTrim(Key, "$")
 
-    Send(Key)
-}
+;     Send(Key)
+; }
 
-After250() {
-    global Keys
-    global CtrKPressed
+; After250() {
+;     global Keys
+;     global CtrKPressed
 
-    Old := A_Clipboard
-    A_Clipboard := ""
-    Txt := ""
+;     Old := A_Clipboard
+;     A_Clipboard := ""
+;     Txt := ""
 
-    startTime := A_TickCount + 250
-    while startTime > A_TickCount
-    {
-        Sleep(20)
+;     startTime := A_TickCount + 250
+;     while startTime > A_TickCount
+;     {
+;         Sleep(20)
 
-        if KeyPressed(Keys)
-        {
-            ; ToolTip("break")
-            goto over
-        }
-    }
+;         if KeyPressed(Keys)
+;         {
+;             ; ToolTip("break")
+;             goto over
+;         }
+;     }
 
-    Line := ""
-    Select := false
+;     Line := ""
+;     Select := false
 
-    Send("^c")
-    if ClipWait(0.1)
-    {
-        ; Obsidian 不带\r\n
-        ; VS Code 带\r\n
+;     Send("^c")
+;     if ClipWait(0.1)
+;     {
+;         ; Obsidian 不带\r\n
+;         ; VS Code 带\r\n
 
-        Txt := A_Clipboard
-        ; ToolTip(Txt)
+;         Txt := A_Clipboard
+;         ; ToolTip(Txt)
 
-        Pos := InStr(Txt, "`n", 0, 1)
-        if (Pos = 0) ; 单行
-        {
-            ; 1. 选中内容复制
-            ; 2. 整行复制
-            A_Clipboard := ""
-            SendInput("{End 2}+{Home 2}") ; fix 单行文本折叠成多行
-            Send("^c")
-            if ClipWait(0.1)
-            {
-                Line := A_Clipboard
-            }
-            SendInput("{End 2}")
-            ; 3. 比较，不相等，存在选中
-            if (InStr(Txt, "* ", 0, 1) = 1) {
-                Select := false
-            }
-            else if (InStr(Txt, ". ", 0, 1) = 2) {
-                Select := false
-            }
-            else if (Line != Txt) {
-                Select := true
-            }
-        }
-    }
-    else { ; 未选中或者不能复制行
-        ; UE ""
-        ; ToolTip("no select")
+;         Pos := InStr(Txt, "`n", 0, 1)
+;         if (Pos = 0) ; 单行
+;         {
+;             ; 1. 选中内容复制
+;             ; 2. 整行复制
+;             A_Clipboard := ""
+;             SendInput("{End 2}+{Home 2}") ; fix 单行文本折叠成多行
+;             Send("^c")
+;             if ClipWait(0.1)
+;             {
+;                 Line := A_Clipboard
+;             }
+;             SendInput("{End 2}")
+;             ; 3. 比较，不相等，存在选中
+;             if (InStr(Txt, "* ", 0, 1) = 1) {
+;                 Select := false
+;             }
+;             else if (InStr(Txt, ". ", 0, 1) = 2) {
+;                 Select := false
+;             }
+;             else if (Line != Txt) {
+;                 Select := true
+;             }
+;         }
+;     }
+;     else { ; 未选中或者不能复制行
+;         ; UE ""
+;         ; ToolTip("no select")
 
-        SendInput("+{Home}")
-        Send("^c")
-        if ClipWait(0.1)
-        {
-            Txt := A_Clipboard
-        }
-    }
+;         SendInput("+{Home}")
+;         Send("^c")
+;         if ClipWait(0.1)
+;         {
+;             Txt := A_Clipboard
+;         }
+;     }
 
-    Txt := RTrim(Txt, "`r`n")
+;     Txt := RTrim(Txt, "`r`n")
 
-    if (Txt != "") {
-        Pos := InStr(Txt, "`n", 0, 1)
-        Len := StrLen(Txt)
+;     if (Txt != "") {
+;         Pos := InStr(Txt, "`n", 0, 1)
+;         Len := StrLen(Txt)
 
-        if (Pos = 0) ; 单行
-        {
-            if (Select) {
-                SendInput("+{Home 2}{BackSpace}")
+;         if (Pos = 0) ; 单行
+;         {
+;             if (Select) {
+;                 SendInput("+{Home 2}{BackSpace}")
 
-                ; 4. 选中则替换选中内容
-                Replace := "``" . Txt . "``"
-                Txt := StrReplace(Line, Txt, Replace)
-                ; ToolTip(Txt)
-            }
-            else { ; 结尾触发
-                Space := InStr(Txt, " ", 0, -1)
-                if (Space = Len) { ; 空格结尾``
-                    SendInput("{End}{U+0060}{U+0060}{Left}")
-                    goto over
-                }
-                else if (Space = 0) { ; 没有空格
-                    goto over
+;                 ; 4. 选中则替换选中内容
+;                 Replace := "``" . Txt . "``"
+;                 Txt := StrReplace(Line, Txt, Replace)
+;                 ; ToolTip(Txt)
+;             }
+;             else { ; 结尾触发
+;                 Space := InStr(Txt, " ", 0, -1)
+;                 if (Space = Len) { ; 空格结尾``
+;                     SendInput("{End}{U+0060}{U+0060}{Left}")
+;                     goto over
+;                 }
+;                 else if (Space = 0) { ; 没有空格
+;                     goto over
 
-                    ; SendInput("+{Home}{BackSpace}")
-                    ; Txt := "``" . Txt . "``"
-                }
-                else { ; 中间有空格
-                    LeftCount := Len - Space
-                    SendInput("+{Left " . LeftCount . "}" . "{BackSpace}")
+;                     ; SendInput("+{Home}{BackSpace}")
+;                     ; Txt := "``" . Txt . "``"
+;                 }
+;                 else { ; 中间有空格
+;                     LeftCount := Len - Space
+;                     SendInput("+{Left " . LeftCount . "}" . "{BackSpace}")
 
-                    Txt := "``" . SubStr(Txt, Space + 1) . "``"
-                }
-            }
-        }
-        else { ; 多行
-            Txt := LTrim(Txt, "`r`n")
-            Txt := "``````" . "`n" . Txt . "`n" . "``````"
-        }
+;                     Txt := "``" . SubStr(Txt, Space + 1) . "``"
+;                 }
+;             }
+;         }
+;         else { ; 多行
+;             Txt := LTrim(Txt, "`r`n")
+;             Txt := "``````" . "`n" . Txt . "`n" . "``````"
+;         }
 
-        A_Clipboard := Txt
-        ClipWait
-        Send("^v")
+;         A_Clipboard := Txt
+;         ClipWait
+;         Send("^v")
 
-        Sleep(50)
-    }
-    else {
-        SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
-    }
+;         Sleep(50)
+;     }
+;     else {
+;         SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
+;     }
 
-over:
-    Txt := ""
-    A_Clipboard := Old
-    Old := ""
-    SetTimer , 0  ; 即此处计时器关闭自己.
-    CtrKPressed := false
-}
+; over:
+;     Txt := ""
+;     A_Clipboard := Old
+;     Old := ""
+;     SetTimer , 0  ; 即此处计时器关闭自己.
+;     CtrKPressed := false
+; }
 
 #HotIf WinActive("ahk_exe Obsidian.exe")
 $^k:: {
