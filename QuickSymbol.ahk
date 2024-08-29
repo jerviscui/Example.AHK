@@ -570,12 +570,15 @@ Obsidian_After250() {
                             Txt := "``" . Txt . "``" . Right
                             ; ToolTip("Txt: " . Txt, , 10, 2)
                             A_Clipboard := Txt
-                            ClipWait
-                            ; ToolTip("A_Clipboard: " . A_Clipboard, , 40, 3)
-                            Send("^v")
-                            ; ToolTip("pasted", , 60, 1)
-                            Sleep(Len * 3)
-                            ; Sleep(50)
+                            if ClipWait() {
+                                ; ToolTip("A_Clipboard: " . A_Clipboard, , 40, 3)
+                                Send("^v")
+                                ; ToolTip("pasted", , 60, 1)
+                                Sleep(Len * 10)
+                            }
+                            else {
+                                ToolTip("error: " . A_Clipboard, , 40, 3)
+                            }
                         }
                     }
                     else {
