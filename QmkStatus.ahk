@@ -257,7 +257,7 @@ ReleaseCtrl()
 {
     global ActiveFiles
 
-    if (ActiveFiles && GetKeyState("Enter", "P")) {
+    if (ActiveFiles && (GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("LButton", "P"))) {
         SetTimer , 0
 
         ActiveFiles := 0
@@ -311,3 +311,8 @@ $!e:: Send "{Up}"
 $!s:: Send "{Left}"
 $!d:: Send "{Down}"
 $!f:: Send "{Right}"
+
+; suppress, same with winG
+Ctrl & Esc:: {
+    return
+}
