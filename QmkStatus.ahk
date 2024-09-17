@@ -211,10 +211,11 @@ GetSize(&Content, &W, &H) {
 
 ;#endregion
 
-;#region typewriter
+;#region Visual Studio
 
 global Typewriter := 0
 
+; switch typewriter mode
 Ctrl & F13:: {
     global Typewriter
 
@@ -229,6 +230,41 @@ Ctrl & F13:: {
 }
 
 #HotIf WinActive("ahk_exe devenv.exe")
+
+global ActiveFiles := 0
+
+; open active files
+Ctrl & p:: {
+    global ActiveFiles
+
+    if (ActiveFiles) {
+        return
+    }
+
+    KeyWait "Ctrl"
+
+    ActiveFiles := 1
+
+    Send "{Ctrl down}"
+    Sleep 100
+    Send "{Tab}"
+    Sleep 50
+
+    SetTimer ReleaseCtrl, 50
+}
+
+ReleaseCtrl()
+{
+    global ActiveFiles
+
+    if (ActiveFiles && GetKeyState("Enter", "P")) {
+        SetTimer , 0
+
+        ActiveFiles := 0
+        Send "{Ctrl up}"
+    }
+}
+
 F13 & q:: {
     Send("^!n")
 }
