@@ -574,7 +574,8 @@ Obsidian_After250() {
                                 ; ToolTip("A_Clipboard: " . A_Clipboard, , 40, 3)
                                 Send("^v")
                                 ; ToolTip("pasted", , 60, 1)
-                                Sleep(Len * 10)
+                                ; Sleep(Len * 10)
+                                Sleep(200)
                             }
                             else {
                                 ToolTip("error: " . A_Clipboard, , 40, 3)
