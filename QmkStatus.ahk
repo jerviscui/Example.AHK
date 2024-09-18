@@ -231,40 +231,6 @@ Ctrl & F13:: {
 
 #HotIf WinActive("ahk_exe devenv.exe")
 
-global ActiveFiles := 0
-
-; open active files
-Ctrl & p:: {
-    global ActiveFiles
-
-    if (ActiveFiles) {
-        return
-    }
-
-    KeyWait "Ctrl"
-
-    ActiveFiles := 1
-
-    Send "{Ctrl down}"
-    Sleep 100
-    Send "{Tab}"
-    Sleep 50
-
-    SetTimer ReleaseCtrl, 50
-}
-
-ReleaseCtrl()
-{
-    global ActiveFiles
-
-    if (ActiveFiles && (GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("LButton", "P"))) {
-        SetTimer , 0
-
-        ActiveFiles := 0
-        Send "{Ctrl up}"
-    }
-}
-
 F13 & q:: {
     Send("^!n")
 }
@@ -306,13 +272,3 @@ $Down:: {
 #HotIf
 
 ;#endregion
-
-$!e:: Send "{Up}"
-$!s:: Send "{Left}"
-$!d:: Send "{Down}"
-$!f:: Send "{Right}"
-
-; suppress, same with winG
-Ctrl & Esc:: {
-    return
-}
