@@ -621,24 +621,24 @@ over:
 global ActiveFiles := 0
 
 ; open active files
-Ctrl & p:: {
-    global ActiveFiles
+; Ctrl & p:: {
+;     global ActiveFiles
 
-    if (ActiveFiles) {
-        return
-    }
+;     if (ActiveFiles) {
+;         return
+;     }
 
-    KeyWait "Ctrl"
+;     KeyWait "Ctrl"
 
-    ActiveFiles := 1
+;     ActiveFiles := 1
 
-    Send "{Ctrl down}"
-    Sleep 100
-    Send "{Tab}"
-    Sleep 100
+;     Send "{Ctrl down}"
+;     Sleep 100
+;     Send "{Tab}"
+;     Sleep 100
 
-    SetTimer ReleaseCtrl, 50
-}
+;     SetTimer ReleaseCtrl, 50
+; }
 
 ReleaseCtrl()
 {
