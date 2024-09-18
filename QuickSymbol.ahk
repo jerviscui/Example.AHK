@@ -665,11 +665,10 @@ Ctrl & Esc:: {
     return
 }
 
-Alt & o:: {
-    Click "Right"
-}
+; Alt & o:: {
+;     Click "Right"
+; }
 
-Alt & u:: {
-    KeyWait "Alt"
-    Click 2
-}
+; Alt & u:: {
+;     Click , , "Left", 2
+; }
