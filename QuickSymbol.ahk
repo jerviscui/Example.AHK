@@ -669,6 +669,9 @@ Ctrl & Esc:: {
 ;     Click "Right"
 ; }
 
+; #Include <GetCaretPosEx>
 ; Alt & u:: {
-;     Click , , "Left", 2
+;     if GetCaretPosEx(&left, &top, &right, &bottom) {
+;         Click left, bottom, "Left", 2
+;     }
 ; }
