@@ -635,7 +635,7 @@ Ctrl & p:: {
     Send "{Ctrl down}"
     Sleep 100
     Send "{Tab}"
-    Sleep 50
+    Sleep 100
 
     SetTimer ReleaseCtrl, 50
 }
