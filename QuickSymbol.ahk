@@ -660,11 +660,6 @@ $!s:: Send "{Left}"
 $!d:: Send "{Down}"
 $!f:: Send "{Right}"
 
-; suppress, same with winG
-Ctrl & Esc:: {
-    return
-}
-
 ; Alt & o:: {
 ;     Click "Right"
 ; }
@@ -675,3 +670,81 @@ Ctrl & Esc:: {
 ;         Click left, bottom, "Left", 2
 ;     }
 ; }
+
+; suppress, same with winG
+Ctrl & Esc:: {
+    return
+}
+
+; move mouse to center
+Alt & c:: {
+    if (!WinActive("A")) {
+        return
+    }
+
+    WinGetPos(&X, &Y, &W, &H)
+    Click W / 2, H / 2, 0
+}
+
+Shift & Delete:: {
+    Send "{BackSpace}"
+}
+
+;#region AltTabMenu
+
+#HotIf GetKeyState("Ctrl", "P")
+*!Tab:: {
+    KeyWait "Alt"
+
+    Send "^!{Tab}"
+    Sleep 100
+
+    SetTimer AltTabMenuClose, 50
+}
+
+AltTabMenuClose()
+{
+    if ((GetKeyState("Enter", "P") || GetKeyState("Esc", "P"))) {
+        SetTimer , 0
+
+        ActiveHwnd := WinActive("A")
+        ; ToolTip "2 " . ActiveHwnd
+        if (!ActiveHwnd) {
+            Sleep 200
+            ActiveHwnd := WinActive("A")
+            if (!ActiveHwnd) {
+                return
+            }
+        }
+
+        WinGetPos(&X, &Y, &W, &H)
+        Click W / 2, H / 2, 0
+    }
+}
+#HotIf
+
+$!Tab:: {
+    KeyWait "Alt"
+
+    Send "!{Tab}"
+    Sleep 100
+
+    ActiveHwnd := WinActive("A")
+    ; ToolTip "1 " . ActiveHwnd
+    if (!ActiveHwnd) {
+        Sleep 200
+        ActiveHwnd := WinActive("A")
+        if (!ActiveHwnd) {
+            return
+        }
+    }
+
+    WinGetPos(&X, &Y, &W, &H)
+    Click W / 2, H / 2, 0
+}
+
+; MButton::AltTabMenu
+; WheelDown::AltTab
+; WheelUp::ShiftAltTab
+
+;#endregion
