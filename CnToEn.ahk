@@ -11,6 +11,12 @@ Description = 中英文符号互换
 
 #Include <IsCnIME>
 
+SetTimer Mainloop, 3000
+
+MainLoop() {
+    SwitchToCn()
+}
+
 #Hotstring EndChars `t
 
 ; , to ，

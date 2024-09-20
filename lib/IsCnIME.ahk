@@ -13,23 +13,62 @@ IsCnIME(WinTitle := "A")
         return
     }
 
-    origin_detect_hidden_window := A_DetectHiddenWindows
-    DetectHiddenWindows(True)
+    AhkId := DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
+
+    result := GetImeState(hWnd, AhkId)
+    ; cn 微软拼音
+    ; * 非英文状态：1025
+    ; * 英文状态：0
+    ; en
+    ; * 英文状态：1025
+    return (result.Id == KeyboardLayoutId["cn"] and result.Mod == 1025)
+}
+
+GetImeState(hWnd, AhkId)
+{
     ThreadID := DllCall("GetWindowThreadProcessId", "UInt", hWnd, "UInt", 0)
     InputLocaleID := DllCall("GetKeyboardLayout", "UInt", ThreadID, "UInt")
 
-    result := SendMessage(
+    origin_detect_hidden_window := A_DetectHiddenWindows
+    DetectHiddenWindows(True)
+    mod := SendMessage(
         0x283,  ; Message : WM_IME_CONTROL
         0x001,  ; wParam : IMC_GETCONVERSIONMODE
         ; 0x005,  ; wParam  : IMC_GETOPENSTATUS
         0,      ; lParam  ： (NoArgs)
         ,       ; Control ： (Window)
-        "ahk_id " DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
+        "ahk_id " AhkId
     )
     DetectHiddenWindows(origin_detect_hidden_window)
 
-    ; 微软拼音（英-中）0/1024-1/1025
-    ; 1 非英文状态
-    ; 0 英文状态
-    return (InputLocaleID == KeyboardLayoutId["cn"] and result == 1025)
+    Result := { Id: InputLocaleID, Mod: mod }
+
+    return Result
+}
+
+SwitchToCn(WinTitle := "A")
+{
+    try {
+        hWnd := WinGetID(WinTitle)
+    } catch Error as err {
+        ; ^Esc 开始菜单弹窗，会卡死在找不到当前窗口
+        return
+    }
+
+    AhkId := DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
+
+    result := GetImeState(hWnd, AhkId)
+
+    if (result.Id == KeyboardLayoutId["cn"] and result.Mod == 0) {
+        origin_detect_hidden_window := A_DetectHiddenWindows
+        DetectHiddenWindows(True)
+        SendMessage(
+            0x283,  ; Message : WM_IME_CONTROL
+            0x002,  ; wParam IMC_SETCONVERSIONMODE
+            1025,      ; lParam  ： (NoArgs)
+            ,       ; Control ： (Window)
+            "ahk_id " . AhkId
+        )
+        DetectHiddenWindows(origin_detect_hidden_window)
+    }
 }
