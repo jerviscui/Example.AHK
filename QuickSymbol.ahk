@@ -696,13 +696,18 @@ Shift & Delete:: {
 *!Tab:: {
     KeyWait "Alt"
 
+    ; HistoryHwnd := WinActive("A")
+    ; WinGetPos(&HX, &HY)
+    MouseGetPos(&HX, &HY)
+
     Send "^!{Tab}"
     Sleep 100
 
-    SetTimer AltTabMenuClose, 50
+    timmer := AltTabMenuClose.Bind(&HX, &HY)
+    SetTimer(timmer, 50)
 }
 
-AltTabMenuClose()
+AltTabMenuClose(&HX, &HY)
 {
     if ((GetKeyState("Enter", "P") || GetKeyState("Esc", "P"))) {
         SetTimer , 0
@@ -718,13 +723,18 @@ AltTabMenuClose()
         }
 
         WinGetPos(&X, &Y, &W, &H)
-        Click W / 2, H / 2, 0
+        MoveMouseToCenter2(HX, HY, X, Y, W, H)
+
     }
 }
 #HotIf
 
 $!Tab:: {
     KeyWait "Alt"
+
+    ; HistoryHwnd := WinActive("A")
+    ; WinGetPos(&HX, &HY)
+    MouseGetPos(&HX, &HY)
 
     Send "!{Tab}"
     Sleep 100
@@ -740,7 +750,42 @@ $!Tab:: {
     }
 
     WinGetPos(&X, &Y, &W, &H)
-    Click W / 2, H / 2, 0
+    MoveMouseToCenter2(HX, HY, X, Y, W, H)
+}
+
+MoveMouseToCenter(HX, HY, X, Y, W, H)
+{
+    MoveAble := false
+    ; left right
+    if (HX <= A_ScreenWidth && X >= A_ScreenWidth) {
+        MoveAble := true
+    }
+    else if (HX >= A_ScreenWidth && X <= A_ScreenWidth) {
+        MoveAble := true
+    }
+    ; top bottom
+    ; if (HY <= A_ScreenHeight && Y >= A_ScreenHeight) {
+    ;     MoveAble := true
+    ; }
+    ; else if (HY >= A_ScreenHeight && Y <= A_ScreenHeight) {
+    ;     MoveAble := true
+    ; }
+
+    if (MoveAble) {
+        Click W / 2, H / 2, 0
+    }
+}
+
+MoveMouseToCenter2(HX, HY, X, Y, W, H)
+{
+    MoveAble := false
+    if (HX <= X || HX >= X + W || HY <= Y || HY >= Y + H) {
+        MoveAble := true
+    }
+
+    if (MoveAble) {
+        Click W / 2, H / 2, 0
+    }
 }
 
 ; MButton::AltTabMenu
