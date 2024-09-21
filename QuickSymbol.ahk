@@ -621,7 +621,7 @@ over:
 global ActiveFiles := 0
 
 ; open active files
-; Ctrl & p:: {
+; $^p:: {
 ;     global ActiveFiles
 
 ;     if (ActiveFiles) {
@@ -660,16 +660,16 @@ $!s:: Send "{Left}"
 $!d:: Send "{Down}"
 $!f:: Send "{Right}"
 
-; Alt & o:: {
-;     Click "Right"
-; }
+$!o:: {
+    Click "Right"
+}
 
-; #Include <GetCaretPosEx>
-; Alt & u:: {
-;     if GetCaretPosEx(&left, &top, &right, &bottom) {
-;         Click left, bottom, "Left", 2
-;     }
-; }
+#Include <GetCaretPosEx>
+$!u:: {
+    if GetCaretPosEx(&left, &top, &right, &bottom) {
+        Click left, bottom, "Left", 2
+    }
+}
 
 ; suppress, same with winG
 Ctrl & Esc:: {
@@ -677,7 +677,7 @@ Ctrl & Esc:: {
 }
 
 ; move mouse to center
-Alt & c:: {
+$!c:: {
     if (!WinActive("A")) {
         return
     }
@@ -686,7 +686,7 @@ Alt & c:: {
     Click W / 2, H / 2, 0
 }
 
-Shift & Delete:: {
++Delete:: {
     Send "{BackSpace}"
 }
 
@@ -776,6 +776,7 @@ MoveMouseToCenter(HX, HY, X, Y, W, H)
     }
 }
 
+; use this
 MoveMouseToCenter2(HX, HY, X, Y, W, H)
 {
     MoveAble := false
