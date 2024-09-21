@@ -216,7 +216,7 @@ GetSize(&Content, &W, &H) {
 global Typewriter := 0
 
 ; switch typewriter mode
-Ctrl & F13:: {
+^F13:: {
     global Typewriter
 
     if (Typewriter) {
