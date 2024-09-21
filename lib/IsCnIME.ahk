@@ -15,35 +15,41 @@ IsCnIME(WinTitle := "A")
 
     AhkId := DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
 
-    result := GetImeState(hWnd, AhkId)
-    ; cn 微软拼音
-    ; * 非英文状态：1025
-    ; * 英文状态：0
-    ; en
-    ; * 英文状态：1025
-    return (result.Id == KeyboardLayoutId["cn"] and result.Mod == 1025)
+    if (GetImeState(hWnd, AhkId, &Result)) {
+        ; cn 微软拼音
+        ; * 非英文状态：1025
+        ; * 英文状态：0
+        ; en
+        ; * 英文状态：1025
+        return (Result.Id == KeyboardLayoutId["cn"] and Result.Mod == 1025)
+    }
 }
 
-GetImeState(hWnd, AhkId)
+GetImeState(hWnd, AhkId, &Result)
 {
     ThreadID := DllCall("GetWindowThreadProcessId", "UInt", hWnd, "UInt", 0)
     InputLocaleID := DllCall("GetKeyboardLayout", "UInt", ThreadID, "UInt")
 
     origin_detect_hidden_window := A_DetectHiddenWindows
     DetectHiddenWindows(True)
-    mod := SendMessage(
-        0x283,  ; Message : WM_IME_CONTROL
-        0x001,  ; wParam : IMC_GETCONVERSIONMODE
-        ; 0x005,  ; wParam  : IMC_GETOPENSTATUS
-        0,      ; lParam  ： (NoArgs)
-        ,       ; Control ： (Window)
-        "ahk_id " AhkId
-    )
+    try {
+        mod := SendMessage(
+            0x283,  ; Message : WM_IME_CONTROL
+            0x001,  ; wParam : IMC_GETCONVERSIONMODE
+            ; 0x005,  ; wParam  : IMC_GETOPENSTATUS
+            0,      ; lParam  ： (NoArgs)
+            ,       ; Control ： (Window)
+            "ahk_id " AhkId
+        )
+    } catch Error as err {
+        ; Error: Target window not found.
+        return false
+    }
     DetectHiddenWindows(origin_detect_hidden_window)
 
     Result := { Id: InputLocaleID, Mod: mod }
 
-    return Result
+    return true
 }
 
 SwitchToCn(WinTitle := "A")
@@ -57,18 +63,25 @@ SwitchToCn(WinTitle := "A")
 
     AhkId := DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
 
-    result := GetImeState(hWnd, AhkId)
+    if (GetImeState(hWnd, AhkId, &Result)) {
+        if (Result.Id == KeyboardLayoutId["cn"] and Result.Mod == 0) {
+            origin_detect_hidden_window := A_DetectHiddenWindows
+            DetectHiddenWindows(True)
 
-    if (result.Id == KeyboardLayoutId["cn"] and result.Mod == 0) {
-        origin_detect_hidden_window := A_DetectHiddenWindows
-        DetectHiddenWindows(True)
-        SendMessage(
-            0x283,  ; Message : WM_IME_CONTROL
-            0x002,  ; wParam IMC_SETCONVERSIONMODE
-            1025,      ; lParam  ： (NoArgs)
-            ,       ; Control ： (Window)
-            "ahk_id " . AhkId
-        )
-        DetectHiddenWindows(origin_detect_hidden_window)
+            try {
+                SendMessage(
+                    0x283,  ; Message : WM_IME_CONTROL
+                    0x002,  ; wParam IMC_SETCONVERSIONMODE
+                    1025,      ; lParam  ： (NoArgs)
+                    ,       ; Control ： (Window)
+                    "ahk_id " . AhkId
+                )
+            } catch Error as err {
+                ; Error: Target window not found.
+                return
+            }
+
+            DetectHiddenWindows(origin_detect_hidden_window)
+        }
     }
 }
