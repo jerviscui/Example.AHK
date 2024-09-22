@@ -667,7 +667,7 @@ $!o:: {
 #Include <GetCaretPosEx>
 $!u:: {
     if GetCaretPosEx(&left, &top, &right, &bottom) {
-        Click left, bottom, "Left", 2
+        Click (left + right) / 2, (top + bottom) / 2, "Left", 2
     }
 }
 
