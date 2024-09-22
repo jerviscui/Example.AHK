@@ -614,9 +614,25 @@ over:
 #HotIf
 ;#endregion
 
+#Include <GetCaretPosEx>
+
 ;#region Visual Studio
 
 #HotIf WinActive("ahk_exe devenv.exe")
+
+$!o:: {
+    KeyWait "Alt"
+
+    Click "Right"
+}
+
+$!u:: {
+    KeyWait "Alt"
+
+    if GetCaretPosEx(&left, &top, &right, &bottom) {
+        Click (left + right) / 2, (top + bottom) / 2, "Left", 2
+    }
+}
 
 global ActiveFiles := 0
 
@@ -664,7 +680,6 @@ $!o:: {
     Click "Right"
 }
 
-#Include <GetCaretPosEx>
 $!u:: {
     if GetCaretPosEx(&left, &top, &right, &bottom) {
         Click (left + right) / 2, (top + bottom) / 2, "Left", 2
