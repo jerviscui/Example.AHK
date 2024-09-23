@@ -61,9 +61,11 @@ SwitchToCn(WinTitle := "A")
         return
     }
 
+    ; ToolTip(hWnd)
     AhkId := DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
 
     if (GetImeState(hWnd, AhkId, &Result)) {
+        ; ToolTip(Result.Id . " " . Result.Mod)
         if (Result.Id == KeyboardLayoutId["cn"] and Result.Mod == 0) {
             origin_detect_hidden_window := A_DetectHiddenWindows
             DetectHiddenWindows(True)
@@ -78,6 +80,7 @@ SwitchToCn(WinTitle := "A")
                 )
             } catch Error as err {
                 ; Error: Target window not found.
+                ; ToolTip(err)
                 return
             }
 
