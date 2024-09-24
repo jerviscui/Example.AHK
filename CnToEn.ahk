@@ -312,14 +312,16 @@ MainLoop() {
 }
 
 ; () to （）
-:?COZ:():: {
+:?B0COZ:():: {
     if IsCnIME()
     {
-        SendInput("{U+0028}{U+0029}{Left}")
+        SendInput("{Backspace 2}{U+0029}{Left}")
     }
     else
     {
-        SendInput("{U+FF08}{U+FF09}{Left}")
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+FF08}")
     }
 }
 

@@ -23,6 +23,8 @@ IsCnIME(WinTitle := "A")
         ; * 英文状态：1025
         return (Result.Id == KeyboardLayoutId["cn"] and Result.Mod == 1025)
     }
+
+    return false
 }
 
 GetImeState(hWnd, AhkId, &Result)
