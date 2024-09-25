@@ -620,6 +620,8 @@ over:
 
 #HotIf WinActive("ahk_exe devenv.exe")
 
+; ~Alt::vkFF  ; 左边的Alt键弹起时，自动按下Eas键
+
 $!o:: {
     KeyWait "Alt"
 
@@ -706,93 +708,84 @@ $!c:: {
 }
 
 ;#region AltTabMenu
+GroupAdd "AltTabWindow", "ahk_class MultitaskingViewFrame"  ; Windows 10
+GroupAdd "AltTabWindow", "ahk_class TaskSwitcherWnd"  ; Windows Vista, 7, 8.1
+GroupAdd "AltTabWindow", "ahk_class #32771"  ; 更早的系统, 或启用了经典的 alt-tab
 
 #HotIf GetKeyState("Ctrl", "P")
 *!Tab:: {
     KeyWait "Alt"
 
-    ; HistoryHwnd := WinActive("A")
-    ; WinGetPos(&HX, &HY)
-    MouseGetPos(&HX, &HY)
-
     Send "^!{Tab}"
     Sleep 100
+    ; if (WinExist("ahk_group AltTabWindow")) {
+    ;     ToolTip "AltTabWindow"
+    ; }
 
-    timmer := AltTabMenuClose.Bind(&HX, &HY)
-    SetTimer(timmer, 50)
+    SetTimer AltTabMenuClose, 50
 }
 
-AltTabMenuClose(&HX, &HY)
+AltTabMenuClose()
 {
-    if ((GetKeyState("Enter", "P") || GetKeyState("Esc", "P"))) {
+    if (GetKeyState("Esc", "P")) {
+        SetTimer , 0
+
+        return
+    }
+
+    if (GetKeyState("Enter", "P")) {
         SetTimer , 0
 
         ActiveHwnd := WinActive("A")
-        ; ToolTip "2 " . ActiveHwnd
+        ; ActiveHwnd := WinActive("A", , "ahk_group AltTabWindow") ; Visual Studio 检测不到
+        ; ToolTip "1 " . ActiveHwnd
         if (!ActiveHwnd) {
             Sleep 200
             ActiveHwnd := WinActive("A")
+            ; ActiveHwnd := WinActive("A", , "ahk_group AltTabWindow") ; Visual Studio 检测不到
+            ; ToolTip "2 " . ActiveHwnd
             if (!ActiveHwnd) {
                 return
             }
         }
 
+        MouseGetPos(&HX, &HY)
         WinGetPos(&X, &Y, &W, &H)
-        MoveMouseToCenter2(HX, HY, X, Y, W, H)
-
+        MoveMouseToCenter(HX, HY, X, Y, W, H)
     }
 }
 #HotIf
 
+#HotIf not WinExist("ahk_group AltTabWindow")
 $!Tab:: {
     KeyWait "Alt"
 
-    ; HistoryHwnd := WinActive("A")
-    ; WinGetPos(&HX, &HY)
-    MouseGetPos(&HX, &HY)
-
     Send "!{Tab}"
-    Sleep 100
+    Sleep 300
 
     ActiveHwnd := WinActive("A")
+    ; ActiveHwnd := WinActive("A", , "ahk_group AltTabWindow") ; Visual Studio 检测不到
     ; ToolTip "1 " . ActiveHwnd
     if (!ActiveHwnd) {
         Sleep 200
         ActiveHwnd := WinActive("A")
+        ; ActiveHwnd := WinActive("A", , "ahk_group AltTabWindow") ; Visual Studio 检测不到
+        ; ToolTip "2 " . ActiveHwnd
         if (!ActiveHwnd) {
             return
         }
     }
 
+    ; this_class := WinGetClass(ActiveHwnd)
+    ; this_title := WinGetTitle(ActiveHwnd)
+
+    MouseGetPos(&HX, &HY)
     WinGetPos(&X, &Y, &W, &H)
-    MoveMouseToCenter2(HX, HY, X, Y, W, H)
+    MoveMouseToCenter(HX, HY, X, Y, W, H)
 }
+#HotIf
 
 MoveMouseToCenter(HX, HY, X, Y, W, H)
-{
-    MoveAble := false
-    ; left right
-    if (HX <= A_ScreenWidth && X >= A_ScreenWidth) {
-        MoveAble := true
-    }
-    else if (HX >= A_ScreenWidth && X <= A_ScreenWidth) {
-        MoveAble := true
-    }
-    ; top bottom
-    ; if (HY <= A_ScreenHeight && Y >= A_ScreenHeight) {
-    ;     MoveAble := true
-    ; }
-    ; else if (HY >= A_ScreenHeight && Y <= A_ScreenHeight) {
-    ;     MoveAble := true
-    ; }
-
-    if (MoveAble) {
-        Click W / 2, H / 2, 0
-    }
-}
-
-; use this
-MoveMouseToCenter2(HX, HY, X, Y, W, H)
 {
     MoveAble := false
     if (HX <= X || HX >= X + W || HY <= Y || HY >= Y + H) {

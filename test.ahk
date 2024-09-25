@@ -1,4 +1,4 @@
-; $F1:: AltTab()
+$F1:: AltTab()
 $F2:: AltTabMenu()
 
 ; AltTab-replacement for Windows 8:
@@ -32,7 +32,7 @@ AltTab() {
         " A_Index " of " ids.Length "
         ahk_id " this_id "
         ahk_class " this_class "
-        " this_title "
+        title " this_title "
 
         Continue?"
             ), , 4)
@@ -93,63 +93,3 @@ AltTabMenu() {
 ;         }
 ;         return true
 ;     }
-
-
-; timeInterval := 500
-
-; GetImeState(id) {
-;     return SendMessage(0x283, ; WM_IME_CONTROL
-;         ; 0x005, ; IMC_GETOPENSTATUS
-;         0x001, ; wParam IMC_SETCONVERSIONMODE
-;         0, ; lParam (NoArgs)
-;         , ; Control (Window)
-;         id)
-; }
-
-; SwitchImeState(id) {
-;     SendMessage(0x283, ; WM_IME_CONTROL
-;         ; 0x006, ; IMC_GETOPENSTATUS
-;         0x002, ; wParam IMC_SETCONVERSIONMODE
-;         1025, ; lParam (Chinese)
-;         , ; Control (Window)
-;         id)
-; }
-
-; DetectHiddenWindows True
-
-; outer:
-;     Loop {
-;         try {
-;             hWnd := WinGetID("A")
-;         } catch as e {
-;             ; ^Esc 开始菜单弹窗，会卡死在找不到当前窗口
-;             continue("outer")
-;         }
-;         id := DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hWnd, "Uint")
-
-;         if (GetImeState(id) == 0) {
-;             SwitchImeState(id)
-;         }
-
-;         Sleep 10000
-;     }
-
-#Include <IsCnIME>
-
-; #HotIf GetKeyState("Ctrl", "P")
-; *Shift:: {
-;     ; SwitchToCn()
-;     ToolTip(A_Now)
-; }
-; #HotIf
-
-; SetTimer Mainloop, 3000
-
-; MainLoop() {
-;     SwitchToCn()
-; }
-
-; $^Shift:: {
-;     ; SwitchToCn()
-;     ToolTip(A_Now)
-; }
