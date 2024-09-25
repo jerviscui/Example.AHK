@@ -508,7 +508,7 @@ Obsidian_After250() {
                 ; Sleep(1000)
 
                 ; line end or start
-                if (Len = StrLen(Line)) {
+                if (Len = StrLen(Line) && Line = Txt) {
                     SendInput("{Left 2}")
                     SendInput("+{Home 2}")
                     Send("^c")
