@@ -315,7 +315,7 @@ MainLoop() {
 :?B0COZ:():: {
     if IsCnIME()
     {
-        SendInput("{Backspace 2}{U+0029}{Left}")
+        SendInput("{Backspace 2}{U+0028}{U+0029}{Left}")
     }
     else
     {
