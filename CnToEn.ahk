@@ -202,14 +202,32 @@ MainLoop() {
 }
 
 ; '' to ‘’
-:?COZ:'':: {
+:?B0COZ:'':: {
     if IsCnIME()
     {
-        SendInput("{U+0027}{U+0027}{Left}")
+        SendInput("{Backspace 2}{U+0027}{U+0027}{Left}")
     }
     else
     {
-        SendInput("{U+2018}{U+2019}{Left}")
+        ; SendInput("{U+2018}{U+2019}{Left}")
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+FF1A}")
+    }
+}
+
+; ‘ or ’ to '
+:?B0COZ:':: {
+    if IsCnIME()
+    {
+        SendInput("{Backspace}{U+0027}")
+    }
+    else
+    {
+        ; SendInput("{U+2018}{U+2019}{Left}")
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+FF1A}")
     }
 }
 
