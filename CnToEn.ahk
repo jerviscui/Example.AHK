@@ -924,3 +924,22 @@ F14:: {
     Old := ""
 }
 ;#endregion
+
+
+;#region Visual Studio
+#HotIf WinActive("ahk_exe devenv.exe")
+
+; <para/>
+:?B0COZ:<para:: {
+    if IsCnIME()
+    {
+        Send("{BackSpace 5}")
+        SendInput("{U+003C}para{Enter}{U+002F}{U+003E}")
+    }
+    else {
+        SendInput("{U+002F}{U+003E}")
+    }
+}
+
+#HotIf
+;#endregion
