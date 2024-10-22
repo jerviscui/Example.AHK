@@ -700,7 +700,7 @@ $!c:: {
     }
 
     WinGetPos(&X, &Y, &W, &H)
-    Click W / 2, H / 2, 0
+    MoveMouseToCenter(-9999, -9999, X, Y, W, H)
 }
 
 +Delete:: {
