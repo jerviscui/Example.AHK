@@ -670,7 +670,6 @@ ReleaseCtrl()
     }
 }
 #HotIf
-
 ;#endregion
 
 $!e:: Send "{Up}"
