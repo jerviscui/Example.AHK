@@ -943,67 +943,25 @@ F14:: {
 
 ; .(
 :?COZ:.9:: {
-    Old := A_Clipboard
-    A_Clipboard := ""
-    Line := ""
-
-    SendInput("+{Home}")
-    Send("^c")
-    if ClipWait(0.2)
-    {
-        Line := A_Clipboard
-        A_Clipboard := ""
-
-        Send("{BackSpace}")
-
-        Line := "(" . Line . ")"
-        A_Clipboard := Line
-        if ClipWait() {
-            Send("^v")
-            Sleep(200)
-        }
-        SendInput("{Home}")
-    }
-    else {
-        Send("{Right}")
-    }
-
-over:
-    Line := ""
-    A_Clipboard := Old
-    Old := ""
+    SendInput(")")
+    Send("{Home}")
+    SendInput("(")
+    Send("{Left}")
 }
 
 ; .)
 :?COZ:.0:: {
-    Old := A_Clipboard
-    A_Clipboard := ""
-    Line := ""
+    Send("{Home}")
+    SendInput("(")
+    Send("{End}")
+    SendInput(")")
+}
 
-    SendInput("+{Home}")
-    Send("^c")
-    if ClipWait(0.2)
-    {
-        Line := A_Clipboard
-        A_Clipboard := ""
-
-        Send("{BackSpace}")
-
-        Line := "(" . Line . ")"
-        A_Clipboard := Line
-        if ClipWait() {
-            Send("^v")
-            Sleep(200)
-        }
-    }
-    else {
-        Send("{Right}")
-    }
-
-over:
-    Line := ""
-    A_Clipboard := Old
-    Old := ""
+; .var
+:?COZ:.var:: {
+    Send("{Home}")
+    SendInput("var  = ")
+    Send("{Left 3}")
 }
 #HotIf
 ;#endregion
