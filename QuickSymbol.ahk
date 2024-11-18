@@ -80,95 +80,74 @@ $F12:: {
     ;     return
     ; }
 
+    if (Pressed) {
+        return
+    }
+
     Pressed := true
     startTime := A_TickCount + 400
     while startTime > A_TickCount
     {
-        if (Count = 0) {
-            return
-        }
-
         if GetKeyState("1", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F1}")
-            return
+            goto over
         }
         if GetKeyState("2", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F2}")
-            return
+            goto over
         }
         if GetKeyState("3", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F3}")
-            return
+            goto over
         }
         if GetKeyState("4", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F4}")
-            return
+            goto over
         }
         if GetKeyState("5", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F5}")
-            return
+            goto over
         }
         if GetKeyState("6", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F6}")
-            return
+            goto over
         }
         if GetKeyState("7", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F7}")
-            return
+            goto over
         }
         if GetKeyState("8", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F8}")
-            return
+            goto over
         }
         if GetKeyState("9", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F9}")
-            return
+            goto over
         }
         if GetKeyState("0", "P")
         {
-            Count := 0
-            Pressed := false
             Send("{F10}")
-            return
+            goto over
         }
 
         Sleep(10)
     }
 
-    if (Count != 1) {
-        return
-    }
+    ; timeout, no target key pressed
+    Send("{F12}")
 
+over:
     Count := 0
     Pressed := false
-    Send("{F12}")
 }
 #MaxThreadsPerHotkey 1
 
