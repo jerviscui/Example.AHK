@@ -963,5 +963,12 @@ F14:: {
     SendInput("var  = ")
     Send("{Left 3}")
 }
+
+; .rr
+:?COZ:.rr:: {
+    Send("{Home}")
+    SendInput("return ")
+    Send("{End}")
+}
 #HotIf
 ;#endregion
