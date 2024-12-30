@@ -811,7 +811,7 @@ MainLoop() {
         SendInput("cuijervis@126.com")
     }
     else {
-        Send("{BackSpace 3}")
+        Send("{BackSpace 4}")
         SendInput("cuijervis@126.com")
     }
 }
