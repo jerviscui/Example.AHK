@@ -6,6 +6,7 @@ Description = 快速输出数字键对应的符号和F键
 #SingleInstance Force
 
 CoordMode "ToolTip", "Screen"
+CoordMode "Mouse", "Screen"
 
 ; SendMode "Event"
 SetKeyDelay(-1, 0)
@@ -771,7 +772,7 @@ MoveMouseToCenter(HX, HY, X, Y, W, H)
     }
 
     if (MoveAble) {
-        Click W / 2, H / 2, 0
+        Click X + W / 2, Y + H / 2, 0
     }
 }
 
