@@ -460,7 +460,7 @@ MainLoop() {
 {
     if IsCnIME()
     {
-        SendInput("{BackSpace 1}")
+        SendInput("{BackSpace 2}")
 
         Old := A_Clipboard
         A_Clipboard := ""
@@ -485,10 +485,6 @@ MainLoop() {
         }
 
         A_Clipboard := Old
-    }
-    else
-    {
-        SendInput("{Space}")
     }
 }
 
