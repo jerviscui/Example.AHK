@@ -868,17 +868,17 @@ MainLoop() {
         Send("{BackSpace 3}")
     }
 
-    ; :*?COZ:y1k
+    ; :*?B0COZ:y1k
     str := ThisHotkey
 
-    count := SelectK(&str)
+    count := SelectK(&str, 2)
 
     Send("^d")
 }
 #HotIf
 ;#endregion
 
-; region copy multi lines like vim
+; region multi lines operation like vim
 :*?B0COZ:y1p::
 :*?B0COZ:y2p::
 :*?B0COZ:y3p::
@@ -897,10 +897,10 @@ MainLoop() {
         Send("{BackSpace 3}")
     }
 
-    ; :*?COZ:y1k
+    ; :*?B0COZ:y1k
     str := ThisHotkey
 
-    count := SelectK(&str)
+    count := SelectK(&str, 2)
 
     ; copy
     Send("^c")
@@ -940,24 +940,51 @@ MainLoop() {
         Send("{BackSpace 3}")
     }
 
-    ; :*?COZ:y1k
+    ; :*?B0COZ:y1k
     str := ThisHotkey
 
-    count := SelectK(&str)
+    count := SelectK(&str, 2)
 }
 
-SelectK(&Str) {
+SelectK(&Str, Index) {
     arr := StrSplit(Str, ":")
     ; y1k
     str := arr[3]
 
-    count := SubStr(str, 2, 1)
+    count := SubStr(str, Index, 1)
 
     Send("{Home}")
     Sleep(50)
     Send("+{Down " . count + 1 . "}")
 
     return count
+}
+
+:*?B0COZ:1dd::
+:*?B0COZ:2dd::
+:*?B0COZ:3dd::
+:*?B0COZ:4dd::
+:*?B0COZ:5dd::
+:*?B0COZ:6dd::
+:*?B0COZ:7dd::
+:*?B0COZ:8dd::
+:*?B0COZ:9dd::
+{
+    if IsCnIME()
+    {
+        Send("{BackSpace 3}")
+    }
+    else {
+        Send("{BackSpace 3}")
+    }
+
+    ; :*?B0COZ:1dd
+    str := ThisHotkey
+
+    Send("{Home}")
+    count := SelectK(&str, 1)
+
+    Send("{Del}")
 }
 
 :*?B0COZ:y1ip::
@@ -978,7 +1005,7 @@ SelectK(&Str) {
         Send("{BackSpace 3}")
     }
 
-    ; :*?COZ:y1i
+    ; :*?B0COZ:y1i
     str := ThisHotkey
 
     count := SelectI(&str)
