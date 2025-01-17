@@ -165,6 +165,8 @@ $F12:: {
 
     ; timeout, no target key pressed
     Send("{F12}")
+    F12Over()
+    return
 }
 
 F12Over() {
@@ -612,6 +614,9 @@ Obsidian_After250() {
         SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
         SendInput("{U+0063}{U+0073}{U+0068}{U+0061}{U+0072}{U+0070}+{Left 6}")
     }
+
+    CtrlKOver(&txt, &old)
+    return
 }
 
 CtrlKOver(&Txt, &Old) {
