@@ -92,52 +92,72 @@ $F12:: {
         if GetKeyState("1", "P")
         {
             Send("{F1}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("2", "P")
         {
             Send("{F2}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("3", "P")
         {
             Send("{F3}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("4", "P")
         {
             Send("{F4}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("5", "P")
         {
             Send("{F5}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("6", "P")
         {
             Send("{F6}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("7", "P")
         {
             Send("{F7}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("8", "P")
         {
             Send("{F8}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("9", "P")
         {
             Send("{F9}")
-            goto over
+
+            F12Over()
+            return
         }
         if GetKeyState("0", "P")
         {
             Send("{F10}")
-            goto over
+
+            F12Over()
+            return
         }
 
         Sleep(10)
@@ -145,8 +165,12 @@ $F12:: {
 
     ; timeout, no target key pressed
     Send("{F12}")
+}
 
-over:
+F12Over() {
+    global Pressed
+    global Count
+
     Count := 0
     Pressed := false
 }
@@ -435,87 +459,89 @@ $^k:: {
 }
 
 Obsidian_After250() {
-    Old := A_Clipboard
+    old := A_Clipboard
     A_Clipboard := ""
-    Txt := ""
-    Line := ""
-    Select := false
+    txt := ""
+    line := ""
+    select := false
 
     Send("^c")
     KeyWait "k"
     if ClipWait(0.250)
     {
         ; Obsidian 不带\r\n
-        Txt := A_Clipboard
+        txt := A_Clipboard
         A_Clipboard := ""
-        ; ToolTip(Txt)
+        ; ToolTip(txt)
         ; Sleep(1000)
 
-        Len := StrLen(Txt)
-        Pos := InStr(Txt, "`n", 0, 1)
+        len := StrLen(txt)
+        pos := InStr(txt, "`n", 0, 1)
 
-        if (Pos > 0) ; 多行
+        if (pos > 0) ; 多行
         {
-            Txt := LTrim(Txt, "`r`n")
-            Txt := "``````" . "`n" . Txt . "`n" . "``````"
+            txt := LTrim(txt, "`r`n")
+            txt := "``````" . "`n" . txt . "`n" . "``````"
 
-            A_Clipboard := Txt
+            A_Clipboard := txt
             ClipWait
             Send("^v")
             Sleep(50)
 
-            goto over
+            CtrlKOver(&txt, &old)
+            return
         }
         ; else 单行
-        if (InStr(Txt, "* ", 0, 1) > 0) {
-            Select := false
+        if (InStr(txt, "* ", 0, 1) > 0) {
+            select := false
         }
-        else if (InStr(Txt, ". ", 0, 1) > 0) {
-            Select := false
+        else if (InStr(txt, ". ", 0, 1) > 0) {
+            select := false
         }
         else {
-            Right := ""
+            right := ""
 
             SendInput("{Right}")
             SendInput("+{End 2}") ; 复制光标之后，兼容单行文本折叠成多行
             Send("^c")
             if ClipWait(0.100)
             {
-                Line := A_Clipboard
+                line := A_Clipboard
                 A_Clipboard := ""
-                Right := Line
-                ; ToolTip("Line: " . Line)
+                right := line
+                ; ToolTip("line: " . line)
                 ; Sleep(1000)
 
                 ; line end or start
-                if (Len = StrLen(Line) && Line = Txt) {
+                if (len = StrLen(line) && line = txt) {
                     SendInput("{Left 2}")
                     SendInput("+{Home 2}")
                     Send("^c")
                     if ClipWait(1) {
-                        Last := A_Clipboard
+                        last := A_Clipboard
                         A_Clipboard := ""
-                        ; ToolTip("Last: " . Last)
+                        ; ToolTip("Last: " . last)
                         ; Sleep(1000)
 
                         ; line start
-                        if (Len = StrLen(Last)) {
-                            ; ToolTip("start: " . Last)
+                        if (len = StrLen(last)) {
+                            ; ToolTip("start: " . last)
                             ; Sleep(1000)
 
-                            Select := false
+                            select := false
                         }
                         ; at last one char
                         else {
-                            ; ToolTip("end: " . Last)
+                            ; ToolTip("end: " . last)
                             ; Sleep(1000)
 
                             SendInput("{Right 2}")
-                            Select := false
+                            select := false
                         }
                     }
                     else {
-                        goto over
+                        CtrlKOver(&txt, &old)
+                        return
                     }
                 }
                 ; line middle
@@ -524,37 +550,37 @@ Obsidian_After250() {
                     Send("^c")
                     if ClipWait(1)
                     {
-                        Line := A_Clipboard
+                        line := A_Clipboard
                         A_Clipboard := ""
                         ; no select
-                        if (Len = StrLen(Line)) {
-                            ; ToolTip("no: " . Line)
+                        if (len = StrLen(line)) {
+                            ; ToolTip("no: " . line)
                             ; Sleep(1000)
 
                             SendInput("{Left}")
-                            Select := false
+                            select := false
                         }
                         else {
-                            Select := true
+                            select := true
 
                             ; at last one char
-                            if (Line = Right) {
+                            if (line = right) {
                                 SendInput("{Right}")
-                                Right := ""
+                                right := ""
                             }
 
-                            SendInput("{Left " . Len . "}")
+                            SendInput("{Left " . len . "}")
                             SendInput("+{End 2}")
-                            Sleep(Len * 3)
+                            Sleep(len * 3)
 
-                            Txt := "``" . Txt . "``" . Right
-                            ; ToolTip("Txt: " . Txt, , 10, 2)
-                            A_Clipboard := Txt
+                            txt := "``" . txt . "``" . right
+                            ; ToolTip("Txt: " . txt, , 10, 2)
+                            A_Clipboard := txt
                             if ClipWait() {
                                 ; ToolTip("A_Clipboard: " . A_Clipboard, , 40, 3)
                                 Send("^v")
                                 ; ToolTip("pasted", , 60, 1)
-                                ; Sleep(Len * 10)
+                                ; Sleep(len * 10)
                                 Sleep(200)
                             }
                             else {
@@ -563,18 +589,19 @@ Obsidian_After250() {
                         }
                     }
                     else {
-                        goto over
+                        CtrlKOver(&txt, &old)
+                        return
                     }
                 }
             }
             else {
                 ; line end
                 SendInput("{Left}")
-                Select := false
+                select := false
             }
         }
 
-        if Select = false
+        if select = false
         {
             ; 光标加行内标记
             SendInput("{U+0060}{U+0060}{Left}")
@@ -585,10 +612,11 @@ Obsidian_After250() {
         SendInput("{U+0060}{U+0060}{U+0060}{Enter}{U+0060}{U+0060}{U+0060}{Up}")
         SendInput("{U+0063}{U+0073}{U+0068}{U+0061}{U+0072}{U+0070}+{Left 6}")
     }
+}
 
-over:
+CtrlKOver(&Txt, &Old) {
     Txt := ""
-    A_Clipboard := Old
+    A_Clipboard := old
     Old := ""
 }
 #HotIf
