@@ -752,124 +752,259 @@ MainLoop() {
 :*?COZ:0`:0::
 {
     ; :*?COZ:0`:0
-    Str := ThisHotkey
+    str := ThisHotkey
 
-    Arr := StrSplit(Str, ":")
-    switch Arr[4] {
+    arr := StrSplit(str, ":")
+    switch arr[4] {
         case "1":
-            Symbol := "1"
+            symbol := "1"
         case "2":
-            Symbol := "2"
+            symbol := "2"
         case "3":
-            Symbol := "3"
+            symbol := "3"
         case "4":
-            Symbol := "4"
+            symbol := "4"
         case "5":
-            Symbol := "5"
+            symbol := "5"
         case "6":
-            Symbol := "6"
+            symbol := "6"
         case "7":
-            Symbol := "7"
+            symbol := "7"
         case "8":
-            Symbol := "8"
+            symbol := "8"
         case "9":
-            Symbol := "9"
+            symbol := "9"
         case "0":
-            Symbol := "0"
+            symbol := "0"
     }
 
-    switch Arr[3] {
+    switch arr[3] {
         case "1":
-            Pre := "1"
+            pre := "1"
         case "2":
-            Pre := "2"
+            pre := "2"
         case "3":
-            Pre := "3"
+            pre := "3"
         case "4":
-            Pre := "4"
+            pre := "4"
         case "5":
-            Pre := "5"
+            pre := "5"
         case "6":
-            Pre := "6"
+            pre := "6"
         case "7":
-            Pre := "7"
+            pre := "7"
         case "8":
-            Pre := "8"
+            pre := "8"
         case "9":
-            Pre := "9"
+            pre := "9"
         case "0":
-            Pre := "0"
+            pre := "0"
     }
 
-    SendInput(Pre . "{U+003A}" . Symbol)
+    SendInput(pre . "{U+003A}" . symbol)
 }
 
-; copy multi lines like vim
-:*?COZ:y1k::
-:*?COZ:y2k::
-:*?COZ:y3k::
-:*?COZ:y4k::
-:*?COZ:y5k::
-:*?COZ:y6k::
-:*?COZ:y7k::
-:*?COZ:y8k::
-:*?COZ:y9k::
+;#region Visual Studio
+#HotIf WinActive("ahk_exe devenv.exe")
+
+; <para/>
+:?B0COZ:<para:: {
+    if IsCnIME()
+    {
+        Send("{BackSpace 5}")
+        SendInput("{U+003C}para{Enter}{U+002F}{U+003E}")
+    }
+    else {
+        SendInput("{U+002F}{U+003E}")
+    }
+}
+
+; .(
+:?COZ:.9:: {
+    SendInput(")")
+    Send("{Home}")
+    SendInput("(")
+    Send("{Left}")
+}
+
+; .)
+:?COZ:.0:: {
+    Send("{Home}")
+    SendInput("(")
+    Send("{End}")
+    SendInput(")")
+}
+
+; .var
+:?COZ:.var:: {
+    Send("{Home}")
+    SendInput("var  = ")
+    Send("{Left 3}")
+}
+
+; .rr
+:?COZ:.rr:: {
+    Send("{Home}")
+    SendInput("return ")
+    Send("{End}")
+}
+
+; region copy multi lines like vim
+:*?B0COZ:y1p::
+:*?B0COZ:y2p::
+:*?B0COZ:y3p::
+:*?B0COZ:y4p::
+:*?B0COZ:y5p::
+:*?B0COZ:y6p::
+:*?B0COZ:y7p::
+:*?B0COZ:y8p::
+:*?B0COZ:y9p::
 {
+    if IsCnIME()
+    {
+        Send("{BackSpace 2}")
+    }
+    else {
+        Send("{BackSpace 3}")
+    }
+
     ; :*?COZ:y1k
-    Str := ThisHotkey
+    str := ThisHotkey
 
-    Arr := StrSplit(Str, ":")
+    count := SelectK(&str)
+
+    Send("^d")
+}
+#HotIf
+;#endregion
+
+; region copy multi lines like vim
+:*?B0COZ:y1p::
+:*?B0COZ:y2p::
+:*?B0COZ:y3p::
+:*?B0COZ:y4p::
+:*?B0COZ:y5p::
+:*?B0COZ:y6p::
+:*?B0COZ:y7p::
+:*?B0COZ:y8p::
+:*?B0COZ:y9p::
+{
+    if IsCnIME()
+    {
+        Send("{BackSpace 2}")
+    }
+    else {
+        Send("{BackSpace 3}")
+    }
+
+    ; :*?COZ:y1k
+    str := ThisHotkey
+
+    count := SelectK(&str)
+
+    ; copy
+    Send("^c")
+    if ClipWait(1) {
+        copy := A_Clipboard
+        A_Clipboard := ""
+
+        ; remove space and last \n
+        copy := RTrim(copy)
+        copy := RTrim(copy, "`r`n")
+
+        A_Clipboard := copy
+        ClipWait
+    }
+
+    Send("{Right}")
+    Send("^v")
+    Sleep(200)
+    Send("{Up " . count + 1 . "}")
+}
+
+:*?B0COZ:y1k::
+:*?B0COZ:y2k::
+:*?B0COZ:y3k::
+:*?B0COZ:y4k::
+:*?B0COZ:y5k::
+:*?B0COZ:y6k::
+:*?B0COZ:y7k::
+:*?B0COZ:y8k::
+:*?B0COZ:y9k::
+{
+    if IsCnIME()
+    {
+        Send("{BackSpace 2}")
+    }
+    else {
+        Send("{BackSpace 3}")
+    }
+
+    ; :*?COZ:y1k
+    str := ThisHotkey
+
+    count := SelectK(&str)
+}
+
+SelectK(&Str) {
+    arr := StrSplit(Str, ":")
     ; y1k
-    Str := Arr[3]
+    str := arr[3]
 
-    Count := SubStr(Str, 2, 1)
+    count := SubStr(str, 2, 1)
 
     Send("{Home}")
     Sleep(50)
-    Send("+{Down " . Count . "}")
+    Send("+{Down " . count + 1 . "}")
 
-    ; ; copy
-    ; Send("^c")
-    ; ; 复制后删除复制内容中最后一个换行符
-
-    ; if ClipWait(1) {
-    ;     Copy := A_Clipboard
-    ;     A_Clipboard := ""
-
-    ;     ; remove last \n
-    ;     Copy := RTrim(Copy)
-    ;     Copy := RTrim(Copy, "`r`n")
-
-    ;     A_Clipboard := Copy
-    ;     ClipWait
-    ; }
-
-    ; Send("{Left}")
+    return count
 }
 
-:*?COZ:y1i::
-:*?COZ:y2i::
-:*?COZ:y3i::
-:*?COZ:y4i::
-:*?COZ:y5i::
-:*?COZ:y6i::
-:*?COZ:y7i::
-:*?COZ:y8i::
-:*?COZ:y9i::
+:*?B0COZ:y1ip::
+:*?B0COZ:y2ip::
+:*?B0COZ:y3ip::
+:*?B0COZ:y4ip::
+:*?B0COZ:y5ip::
+:*?B0COZ:y6ip::
+:*?B0COZ:y7ip::
+:*?B0COZ:y8ip::
+:*?B0COZ:y9ip::
 {
-    ; :*?COZ:y1k
-    Str := ThisHotkey
+    if IsCnIME()
+    {
+        Send("{BackSpace 2}")
+    }
+    else {
+        Send("{BackSpace 3}")
+    }
 
-    Arr := StrSplit(Str, ":")
+    ; :*?COZ:y1i
+    str := ThisHotkey
+
+    count := SelectI(&str)
+
+    ; copy
+    Send("^c")
+
+    Send("{Left}")
+    Send("^v")
+}
+
+SelectI(&Str) {
+    arr := StrSplit(Str, ":")
     ; y1k
-    Str := Arr[3]
+    str := arr[3]
 
-    Count := SubStr(Str, 2, 1)
+    count := SubStr(str, 2, 1)
 
     Send("{End}")
     Sleep(50)
-    Send("+{Up " . Count . "}")
+    Send("+{Up " . Count + 1 . "}")
+
+    return count
 }
+; endregion
+
 
 :?B0COZ:cui2:: {
     if IsCnIME()
@@ -884,18 +1019,18 @@ MainLoop() {
 }
 
 :?COZ:sj:: {
-    TimeString := FormatTime(, "yyyy-MM-dd hh:mm:ss")
-    ; ToolTip(TimeString)
+    timeString := FormatTime(, "yyyy-MM-dd hh:mm:ss")
+    ; ToolTip(timeString)
     if IsCnIME()
     {
-        TimeString := StrReplace(TimeString, ":", "{U+003A}")
+        timeString := StrReplace(timeString, ":", "{U+003A}")
     }
-    SendInput(TimeString)
+    SendInput(timeString)
 }
 
 :?COZ:rq:: {
-    TimeString := FormatTime(, "yyyy-MM-dd")
-    SendInput(TimeString)
+    timeString := FormatTime(, "yyyy-MM-dd")
+    SendInput(timeString)
 }
 
 ;#region select text to convert en punctuation
@@ -990,52 +1125,4 @@ F14:: {
     A_Clipboard := Old
     Old := ""
 }
-;#endregion
-
-
-;#region Visual Studio
-#HotIf WinActive("ahk_exe devenv.exe")
-
-; <para/>
-:?B0COZ:<para:: {
-    if IsCnIME()
-    {
-        Send("{BackSpace 5}")
-        SendInput("{U+003C}para{Enter}{U+002F}{U+003E}")
-    }
-    else {
-        SendInput("{U+002F}{U+003E}")
-    }
-}
-
-; .(
-:?COZ:.9:: {
-    SendInput(")")
-    Send("{Home}")
-    SendInput("(")
-    Send("{Left}")
-}
-
-; .)
-:?COZ:.0:: {
-    Send("{Home}")
-    SendInput("(")
-    Send("{End}")
-    SendInput(")")
-}
-
-; .var
-:?COZ:.var:: {
-    Send("{Home}")
-    SendInput("var  = ")
-    Send("{Left 3}")
-}
-
-; .rr
-:?COZ:.rr:: {
-    Send("{Home}")
-    SendInput("return ")
-    Send("{End}")
-}
-#HotIf
 ;#endregion
