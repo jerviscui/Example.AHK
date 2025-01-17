@@ -804,6 +804,73 @@ MainLoop() {
     SendInput(Pre . "{U+003A}" . Symbol)
 }
 
+; copy multi lines like vim
+:*?COZ:y1k::
+:*?COZ:y2k::
+:*?COZ:y3k::
+:*?COZ:y4k::
+:*?COZ:y5k::
+:*?COZ:y6k::
+:*?COZ:y7k::
+:*?COZ:y8k::
+:*?COZ:y9k::
+{
+    ; :*?COZ:y1k
+    Str := ThisHotkey
+
+    Arr := StrSplit(Str, ":")
+    ; y1k
+    Str := Arr[3]
+
+    Count := SubStr(Str, 2, 1)
+
+    Send("{Home}")
+    Sleep(50)
+    Send("+{Down " . Count . "}")
+
+    ; ; copy
+    ; Send("^c")
+    ; ; 复制后删除复制内容中最后一个换行符
+
+    ; if ClipWait(1) {
+    ;     Copy := A_Clipboard
+    ;     A_Clipboard := ""
+
+    ;     ; remove last \n
+    ;     Copy := RTrim(Copy)
+    ;     Copy := RTrim(Copy, "`r`n")
+
+    ;     A_Clipboard := Copy
+    ;     ClipWait
+    ; }
+
+    ; Send("{Left}")
+}
+
+:*?COZ:y1i::
+:*?COZ:y2i::
+:*?COZ:y3i::
+:*?COZ:y4i::
+:*?COZ:y5i::
+:*?COZ:y6i::
+:*?COZ:y7i::
+:*?COZ:y8i::
+:*?COZ:y9i::
+{
+    ; :*?COZ:y1k
+    Str := ThisHotkey
+
+    Arr := StrSplit(Str, ":")
+    ; y1k
+    Str := Arr[3]
+
+    Count := SubStr(Str, 2, 1)
+
+    Send("{End}")
+    Sleep(50)
+    Send("+{Up " . Count . "}")
+}
+
 :?B0COZ:cui2:: {
     if IsCnIME()
     {
