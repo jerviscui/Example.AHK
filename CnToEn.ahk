@@ -476,7 +476,8 @@ MainLoop() {
                 case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
                     SendInput("{Right}{U+002E}{Space}")
                 default:
-                    SendInput("{Right}{U+3002}")
+                    SendInput("{Right}{Space}")
+                    ; SendInput("{Right}{U+3002}")
             }
         }
         else
@@ -488,7 +489,7 @@ MainLoop() {
     }
     else
     {
-        SendInput("{Space}")
+        ; SendInput("{Space}")
     }
 }
 
