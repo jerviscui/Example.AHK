@@ -973,7 +973,7 @@ SelectK(&Str, Index) {
 {
     if IsCnIME()
     {
-        Send("{BackSpace 3}")
+        Send("{BackSpace 2}")
     }
     else {
         Send("{BackSpace 3}")
