@@ -685,6 +685,19 @@ ReleaseCtrl()
 #HotIf
 ;#endregion
 
+;#region BackpackBattles
+#HotIf WinActive("ahk_exe BackpackBattles.exe")
+
+$t::
+{
+    Send "{Alt Down}"
+    KeyWait "t"
+    Send "{Alt Up}"
+}
+
+#HotIf
+;#endregion
+
 $!e:: Send "{Up}"
 $!s:: Send "{Left}"
 $!d:: Send "{Down}"
