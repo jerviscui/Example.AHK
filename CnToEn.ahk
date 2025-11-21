@@ -956,7 +956,7 @@ SelectK(&Str, Index) {
 
     Send("{Home}")
     Sleep(50)
-    Send("+{Down " . count + 1 . "}")
+    Send("+{Down " . count . "}")
 
     return count
 }
@@ -1027,7 +1027,7 @@ SelectI(&Str) {
 
     Send("{End}")
     Sleep(50)
-    Send("+{Up " . Count + 1 . "}")
+    Send("+{Up " . Count . "}")
 
     return count
 }
