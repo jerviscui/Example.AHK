@@ -827,3 +827,8 @@ MoveMouseToCenter(HX, HY, X, Y, W, H)
 ; WheelUp::ShiftAltTab
 
 ;#endregion
+
+; send win+shift+f for everything
+$#f:: {
+    Send "#+f"
+}
