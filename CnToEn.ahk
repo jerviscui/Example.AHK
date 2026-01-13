@@ -1056,6 +1056,22 @@ SelectI(&Str) {
     SendInput(timeString)
 }
 
+:?COZ:js:: {
+    SendInput("JavaScript")
+    if IsCnIME()
+    {
+        Send("{Enter}")
+    }
+}
+
+:?COZ:ts:: {
+    SendInput("TypeScript")
+    if IsCnIME()
+    {
+        Send("{Enter}")
+    }
+}
+
 :?COZ:rq:: {
     timeString := FormatTime(, "yyyy-MM-dd")
     SendInput(timeString)
