@@ -13,57 +13,6 @@ SetKeyDelay(-1, 0)
 A_MenuMaskKey := "vkFF"  ; vkFF 是未映射的
 
 ;#region Number output Numeric symbol and F1~F10
-; time := DllCall("GetDoubleClickTime")
-time := 180
-
-DoubleClick(VK)
-{
-    ; ToolTip(A_TimeSincePriorHotkey)
-    if (A_PriorHotKey = A_ThisHotkey && A_TimeSincePriorHotkey > 100 && A_TimeSincePriorHotkey < time)
-    {
-        ; Send("{Backspace}+" . VK)
-        Send("{Backspace}")
-
-        if (VK = "1") {
-            Send("{U+0021}")
-        }
-        else if (VK = "2") {
-            Send("{U+0040}")
-        }
-        else if (VK = "3") {
-            Send("{U+0023}")
-        }
-        else if (VK = "4") {
-            Send("{U+0024}")
-        }
-        else if (VK = "5") {
-            Send("{U+0025}")
-        }
-        else if (VK = "6") {
-            Send("{U+005E}")
-        }
-        else if (VK = "7") {
-            Send("{U+0026}")
-        }
-        else if (VK = "8") {
-            Send("{U+002A}")
-        }
-        else if (VK = "9") {
-            Send("{U+0028}")
-        }
-        else if (VK = "0") {
-            Send("{U+0029}")
-        }
-        else if (VK = "-") {
-            Send("{U+005F}")
-        }
-
-        return
-    }
-
-    Send(VK)
-}
-
 global Pressed := false
 global Count := 0
 
@@ -89,6 +38,7 @@ $F12:: {
     startTime := A_TickCount + 400
     while startTime > A_TickCount
     {
+        ; 数字转 F 键
         if GetKeyState("1", "P")
         {
             Send("{F1}")
@@ -177,6 +127,57 @@ F12Over() {
     Pressed := false
 }
 #MaxThreadsPerHotkey 1
+
+; time := DllCall("GetDoubleClickTime")
+time := 180
+
+DoubleClick(VK)
+{
+    ; ToolTip(A_TimeSincePriorHotkey)
+    if (A_PriorHotKey = A_ThisHotkey && A_TimeSincePriorHotkey > 100 && A_TimeSincePriorHotkey < time)
+    {
+        ; Send("{Backspace}+" . VK)
+        Send("{Backspace}")
+
+        if (VK = "1") {
+            Send("{U+0021}")
+        }
+        else if (VK = "2") {
+            Send("{U+0040}")
+        }
+        else if (VK = "3") {
+            Send("{U+0023}")
+        }
+        else if (VK = "4") {
+            Send("{U+0024}")
+        }
+        else if (VK = "5") {
+            Send("{U+0025}")
+        }
+        else if (VK = "6") {
+            Send("{U+005E}")
+        }
+        else if (VK = "7") {
+            Send("{U+0026}")
+        }
+        else if (VK = "8") {
+            Send("{U+002A}")
+        }
+        else if (VK = "9") {
+            Send("{U+0028}")
+        }
+        else if (VK = "0") {
+            Send("{U+0029}")
+        }
+        else if (VK = "-") {
+            Send("{U+005F}")
+        }
+
+        return
+    }
+
+    Send(VK)
+}
 
 $1:: {
     if Pressed
@@ -630,7 +631,6 @@ CtrlKOver(&Txt, &Old) {
 #Include <GetCaretPosEx>
 
 ;#region Visual Studio
-
 #HotIf WinActive("ahk_exe devenv.exe")
 
 ; ~Alt::vkFF  ; 左边的Alt键弹起时，自动按下Eas键
@@ -671,17 +671,17 @@ global ActiveFiles := 0
 ;     SetTimer ReleaseCtrl, 50
 ; }
 
-ReleaseCtrl()
-{
-    global ActiveFiles
+; ReleaseCtrl()
+; {
+;     global ActiveFiles
 
-    if (ActiveFiles && (GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("LButton", "P"))) {
-        SetTimer , 0
+;     if (ActiveFiles && (GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("LButton", "P"))) {
+;         SetTimer , 0
 
-        ActiveFiles := 0
-        Send "{Ctrl up}"
-    }
-}
+;         ActiveFiles := 0
+;         Send "{Ctrl up}"
+;     }
+; }
 #HotIf
 ;#endregion
 
@@ -702,6 +702,7 @@ $!e:: Send "{Up}"
 $!s:: Send "{Left}"
 $!d:: Send "{Down}"
 $!f:: Send "{Right}"
+$!4:: Send "!{F4}"
 
 $!o:: {
     Click "Right"
@@ -718,6 +719,10 @@ Ctrl & Esc:: {
     return
 }
 
++Delete:: {
+    Send "{BackSpace}"
+}
+
 ; move mouse to center
 $!c:: {
     if (!WinActive("A")) {
@@ -726,10 +731,6 @@ $!c:: {
 
     WinGetPos(&X, &Y, &W, &H)
     MoveMouseToCenter(-9999, -9999, X, Y, W, H)
-}
-
-+Delete:: {
-    Send "{BackSpace}"
 }
 
 ;#region AltTabMenu
