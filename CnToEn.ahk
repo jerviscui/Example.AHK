@@ -159,6 +159,20 @@ MainLoop() {
     }
 }
 
+; \ to 、
+:?B0COZ:\:: {
+    if IsCnIME()
+    {
+        SendInput("{Backspace}{U+005C}")
+    }
+    else
+    {
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+3001}")
+    }
+}
+
 ; ? to ？
 :?B0COZ:?:: {
     if IsCnIME()
@@ -242,20 +256,6 @@ MainLoop() {
         ; only for cn to en
         SendInput("{Tab}")
         ; SendInput("{U+201C}{U+201D}{Left}")
-    }
-}
-
-; \ to 、
-:?B0COZ:\:: {
-    if IsCnIME()
-    {
-        SendInput("{Backspace}{U+005C}")
-    }
-    else
-    {
-        ; only for cn to en
-        SendInput("{Tab}")
-        ; SendInput("{U+3001}")
     }
 }
 
