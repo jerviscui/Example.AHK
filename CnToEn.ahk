@@ -11,11 +11,10 @@ Description = 中英文符号互换
 
 #Include <IsCnIME>
 
-SetTimer Mainloop, 3000
-
-MainLoop() {
-    SwitchToCn()
-}
+; SetTimer Mainloop, 3000
+; MainLoop() {
+;     SwitchToCn()
+; }
 
 #Hotstring EndChars `t
 
@@ -118,52 +117,83 @@ MainLoop() {
 }
 
 ; /// to 、、、
-:?B0COZ:///:: {
-    if IsCnIME()
-    {
-        SendInput("{Backspace 3}{U+002F}{U+002F}{U+002F}")
-    }
-    else
-    {
-        ; only for cn to en
-        SendInput("{Tab}")
-        ; SendInput("{U+3001}")
-    }
-}
+; :?B0COZ:///:: {
+;     if IsCnIME()
+;     {
+;         SendInput("{Backspace 3}{U+002F}{U+002F}{U+002F}")
+;     }
+;     else
+;     {
+;         ; only for cn to en
+;         SendInput("{Tab}")
+;         ; SendInput("{U+3001}")
+;     }
+; }
 
 ; // to 、、
-:?B0COZ://:: {
-    if IsCnIME()
-    {
-        SendInput("{Backspace 2}{U+002F}{U+002F}")
-    }
-    else
-    {
-        ; only for cn to en
-        SendInput("{Tab}")
-        ; SendInput("{U+3001}")
-    }
-}
+; :?B0COZ://:: {
+;     if IsCnIME()
+;     {
+;         SendInput("{Backspace 2}{U+002F}{U+002F}")
+;     }
+;     else
+;     {
+;         ; only for cn to en
+;         SendInput("{Tab}")
+;         ; SendInput("{U+3001}")
+;     }
+; }
 
 ; / to 、
-:?B0COZ:/:: {
-    if IsCnIME()
-    {
-        SendInput("{Backspace}{U+002F}")
-    }
-    else
-    {
-        ; only for cn to en
-        SendInput("{Tab}")
-        ; SendInput("{U+3001}")
-    }
-}
+; :?B0COZ:/:: {
+;     if IsCnIME()
+;     {
+;         ; ToolTip("cn")
+;         ; SendInput("{Backspace}{U+002F}")
+;         Send("{Backspace}{U+002F}")
+;     }
+;     else
+;     {
+;         ; ToolTip("en")
+;         ; only for cn to en
+;         SendInput("{Tab}")
+;         ; SendInput("{U+3001}")
+;     }
+; }
 
 ; \ to 、
 :?B0COZ:\:: {
     if IsCnIME()
     {
         SendInput("{Backspace}{U+005C}")
+    }
+    else
+    {
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+3001}")
+    }
+}
+
+; \\ to 、、
+:?B0COZ:\\:: {
+    if IsCnIME()
+    {
+        SendInput("{Backspace 2}{U+005C}{U+005C}")
+    }
+    else
+    {
+        ; only for cn to en
+        SendInput("{Tab}")
+        ; SendInput("{U+3001}")
+    }
+}
+
+; \\\ to 、、、
+:?B0COZ:\\\:: {
+    if IsCnIME()
+    {
+        SendInput("{Backspace 3}{U+005C}{U+005C}{U+005C}")
     }
     else
     {
@@ -1087,7 +1117,7 @@ ToFullWidth := Map(
     "!", "！",
     "<", "《",
     ">", "》",
-    "/", "、",
+    "\", "、",
     "(", "（",
     ")", "）",
     "[", "【",
