@@ -1,4 +1,9 @@
-﻿/*
+﻿if !A_IsAdmin {
+    Run '*RunAs "' A_AhkPath '" "' A_ScriptFullPath '"'
+    ExitApp
+}
+
+/*
 Description = 快速输出数字键对应的符号和F键
 */
 #Requires AutoHotkey v2.0

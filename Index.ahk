@@ -1,3 +1,8 @@
+if !A_IsAdmin {
+    Run '*RunAs "' A_AhkPath '" "' A_ScriptFullPath '"'
+    ExitApp
+}
+
 #Requires AutoHotkey v2.0
 
 #SingleInstance Force

@@ -1,4 +1,9 @@
-﻿/*
+﻿if !A_IsAdmin {
+    Run '*RunAs "' A_AhkPath '" "' A_ScriptFullPath '"'
+    ExitApp
+}
+
+/*
 Description = 中英文符号互换
 */
 ; #Requires AutoHotkey v2.0
