@@ -687,7 +687,10 @@ Description = 中英文符号互换
             Pre := "0"
     }
 
-    SendInput(Pre . "{U+002E}" . Symbol)
+    Sleep(50)
+    SendInput(Pre)
+    Sleep(50)
+    SendInput("{U+002E}" . Symbol)
 }
 
 :*?COZ:1`:1::
@@ -841,7 +844,10 @@ Description = 中英文符号互换
             pre := "0"
     }
 
-    SendInput(pre . "{U+003A}" . symbol)
+    Sleep(50)
+    SendInput(Pre)
+    Sleep(50)
+    SendInput("{U+003A}" . Symbol)
 }
 
 ;#region Visual Studio
