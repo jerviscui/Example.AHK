@@ -491,51 +491,53 @@ MainLoop() {
     }
 }
 
-:*?B0COZ:1. ::
-:*?B0COZ:2. ::
-:*?B0COZ:3. ::
-:*?B0COZ:4. ::
-:*?B0COZ:5. ::
-:*?B0COZ:6. ::
-:*?B0COZ:7. ::
-:*?B0COZ:8. ::
-:*?B0COZ:9. ::
-:*?B0COZ:0. ::
-{
-    if IsCnIME()
-    {
-        SendInput("{BackSpace 1}")
+; 1. 微软输入法自身支持了
+; :*?B0COZ:1. ::
+; :*?B0COZ:2. ::
+; :*?B0COZ:3. ::
+; :*?B0COZ:4. ::
+; :*?B0COZ:5. ::
+; :*?B0COZ:6. ::
+; :*?B0COZ:7. ::
+; :*?B0COZ:8. ::
+; :*?B0COZ:9. ::
+; :*?B0COZ:0. ::
+; {
+;     if IsCnIME()
+;     {
+;         SendInput("{BackSpace 1}")
 
-        Old := A_Clipboard
-        A_Clipboard := ""
+;         Old := A_Clipboard
+;         A_Clipboard := ""
 
-        SendInput("+{Left}")
-        Send("^c")
-        if ClipWait(0.100)
-        {
-            Txt := A_Clipboard
-            A_Clipboard := ""
+;         SendInput("+{Left}")
+;         Sleep(1000)
+;         Send("^c")
+;         if ClipWait(0.2)
+;         {
+;             Txt := A_Clipboard
+;             A_Clipboard := ""
 
-            switch Txt {
-                case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
-                    SendInput("{Right}{U+002E}{Space}")
-                default:
-                    SendInput("{Right}{Space}")
-                    ; SendInput("{Right}{U+3002}")
-            }
-        }
-        else
-        {
-            SendInput("{Right}")
-        }
+;             switch Txt {
+;                 case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
+;                     SendInput("{Right}{U+002E}{Space}")
+;                 default:
+;                     SendInput("{Right}{Space}")
+;                     ; SendInput("{Right}{U+3002}")
+;             }
+;         }
+;         else
+;         {
+;             SendInput("{Right}")
+;         }
 
-        A_Clipboard := Old
-    }
-    else
-    {
-        ; SendInput("{Space}")
-    }
-}
+;         A_Clipboard := Old
+;     }
+;     else
+;     {
+;         SendInput("{Space}")
+;     }
+; }
 
 :*?COZ:1.1::
 :*?COZ:2.1::
