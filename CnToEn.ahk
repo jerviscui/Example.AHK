@@ -21,17 +21,18 @@ MainLoop() {
     SwitchToCn()
 }
 
+; 微信输入法自身支持了
 ; 中文时将 / 输出为 、
-/:: {
-    if IsCnIME()
-    {
-        Send "{U+3001}"
-    }
-    else
-    {
-        Send "{U+002F}"
-    }
-}
+; /:: {
+;     if IsCnIME()
+;     {
+;         Send "{U+3001}"
+;     }
+;     else
+;     {
+;         Send "{U+002F}"
+;     }
+; }
 
 #Hotstring EndChars `t
 
@@ -491,7 +492,7 @@ MainLoop() {
     }
 }
 
-; 1. 微软输入法自身支持了
+; 1. 微信输入法自身支持了
 ; :*?B0COZ:1. ::
 ; :*?B0COZ:2. ::
 ; :*?B0COZ:3. ::
@@ -539,323 +540,325 @@ MainLoop() {
 ;     }
 ; }
 
-:*?COZ:1.1::
-:*?COZ:2.1::
-:*?COZ:3.1::
-:*?COZ:4.1::
-:*?COZ:5.1::
-:*?COZ:6.1::
-:*?COZ:7.1::
-:*?COZ:8.1::
-:*?COZ:9.1::
-:*?COZ:0.1::
-:*?COZ:1.2::
-:*?COZ:2.2::
-:*?COZ:3.2::
-:*?COZ:4.2::
-:*?COZ:5.2::
-:*?COZ:6.2::
-:*?COZ:7.2::
-:*?COZ:8.2::
-:*?COZ:9.2::
-:*?COZ:0.2::
-:*?COZ:1.3::
-:*?COZ:2.3::
-:*?COZ:3.3::
-:*?COZ:4.3::
-:*?COZ:5.3::
-:*?COZ:6.3::
-:*?COZ:7.3::
-:*?COZ:8.3::
-:*?COZ:9.3::
-:*?COZ:0.3::
-:*?COZ:1.4::
-:*?COZ:2.4::
-:*?COZ:3.4::
-:*?COZ:4.4::
-:*?COZ:5.4::
-:*?COZ:6.4::
-:*?COZ:7.4::
-:*?COZ:8.4::
-:*?COZ:9.4::
-:*?COZ:0.4::
-:*?COZ:1.5::
-:*?COZ:2.5::
-:*?COZ:3.5::
-:*?COZ:4.5::
-:*?COZ:5.5::
-:*?COZ:6.5::
-:*?COZ:7.5::
-:*?COZ:8.5::
-:*?COZ:9.5::
-:*?COZ:0.5::
-:*?COZ:1.6::
-:*?COZ:2.6::
-:*?COZ:3.6::
-:*?COZ:4.6::
-:*?COZ:5.6::
-:*?COZ:6.6::
-:*?COZ:7.6::
-:*?COZ:8.6::
-:*?COZ:9.6::
-:*?COZ:0.6::
-:*?COZ:1.7::
-:*?COZ:2.7::
-:*?COZ:3.7::
-:*?COZ:4.7::
-:*?COZ:5.7::
-:*?COZ:6.7::
-:*?COZ:7.7::
-:*?COZ:8.7::
-:*?COZ:9.7::
-:*?COZ:0.7::
-:*?COZ:1.8::
-:*?COZ:2.8::
-:*?COZ:3.8::
-:*?COZ:4.8::
-:*?COZ:5.8::
-:*?COZ:6.8::
-:*?COZ:7.8::
-:*?COZ:8.8::
-:*?COZ:9.8::
-:*?COZ:0.8::
-:*?COZ:1.9::
-:*?COZ:2.9::
-:*?COZ:3.9::
-:*?COZ:4.9::
-:*?COZ:5.9::
-:*?COZ:6.9::
-:*?COZ:7.9::
-:*?COZ:8.9::
-:*?COZ:9.9::
-:*?COZ:0.9::
-:*?COZ:1.0::
-:*?COZ:2.0::
-:*?COZ:3.0::
-:*?COZ:4.0::
-:*?COZ:5.0::
-:*?COZ:6.0::
-:*?COZ:7.0::
-:*?COZ:8.0::
-:*?COZ:9.0::
-:*?COZ:0.0::
-{
-    ; :*?COZ:0.0
-    Str := ThisHotkey
+; 1. 微信输入法自身支持了
+; :*?COZ:1.1::
+; :*?COZ:2.1::
+; :*?COZ:3.1::
+; :*?COZ:4.1::
+; :*?COZ:5.1::
+; :*?COZ:6.1::
+; :*?COZ:7.1::
+; :*?COZ:8.1::
+; :*?COZ:9.1::
+; :*?COZ:0.1::
+; :*?COZ:1.2::
+; :*?COZ:2.2::
+; :*?COZ:3.2::
+; :*?COZ:4.2::
+; :*?COZ:5.2::
+; :*?COZ:6.2::
+; :*?COZ:7.2::
+; :*?COZ:8.2::
+; :*?COZ:9.2::
+; :*?COZ:0.2::
+; :*?COZ:1.3::
+; :*?COZ:2.3::
+; :*?COZ:3.3::
+; :*?COZ:4.3::
+; :*?COZ:5.3::
+; :*?COZ:6.3::
+; :*?COZ:7.3::
+; :*?COZ:8.3::
+; :*?COZ:9.3::
+; :*?COZ:0.3::
+; :*?COZ:1.4::
+; :*?COZ:2.4::
+; :*?COZ:3.4::
+; :*?COZ:4.4::
+; :*?COZ:5.4::
+; :*?COZ:6.4::
+; :*?COZ:7.4::
+; :*?COZ:8.4::
+; :*?COZ:9.4::
+; :*?COZ:0.4::
+; :*?COZ:1.5::
+; :*?COZ:2.5::
+; :*?COZ:3.5::
+; :*?COZ:4.5::
+; :*?COZ:5.5::
+; :*?COZ:6.5::
+; :*?COZ:7.5::
+; :*?COZ:8.5::
+; :*?COZ:9.5::
+; :*?COZ:0.5::
+; :*?COZ:1.6::
+; :*?COZ:2.6::
+; :*?COZ:3.6::
+; :*?COZ:4.6::
+; :*?COZ:5.6::
+; :*?COZ:6.6::
+; :*?COZ:7.6::
+; :*?COZ:8.6::
+; :*?COZ:9.6::
+; :*?COZ:0.6::
+; :*?COZ:1.7::
+; :*?COZ:2.7::
+; :*?COZ:3.7::
+; :*?COZ:4.7::
+; :*?COZ:5.7::
+; :*?COZ:6.7::
+; :*?COZ:7.7::
+; :*?COZ:8.7::
+; :*?COZ:9.7::
+; :*?COZ:0.7::
+; :*?COZ:1.8::
+; :*?COZ:2.8::
+; :*?COZ:3.8::
+; :*?COZ:4.8::
+; :*?COZ:5.8::
+; :*?COZ:6.8::
+; :*?COZ:7.8::
+; :*?COZ:8.8::
+; :*?COZ:9.8::
+; :*?COZ:0.8::
+; :*?COZ:1.9::
+; :*?COZ:2.9::
+; :*?COZ:3.9::
+; :*?COZ:4.9::
+; :*?COZ:5.9::
+; :*?COZ:6.9::
+; :*?COZ:7.9::
+; :*?COZ:8.9::
+; :*?COZ:9.9::
+; :*?COZ:0.9::
+; :*?COZ:1.0::
+; :*?COZ:2.0::
+; :*?COZ:3.0::
+; :*?COZ:4.0::
+; :*?COZ:5.0::
+; :*?COZ:6.0::
+; :*?COZ:7.0::
+; :*?COZ:8.0::
+; :*?COZ:9.0::
+; :*?COZ:0.0::
+; {
+;     ; :*?COZ:0.0
+;     Str := ThisHotkey
 
-    Arr := StrSplit(Str, ".")
-    ; ToolTip(Arr[2])
-    switch Arr[2] {
-        case "1":
-            Symbol := "1"
-        case "2":
-            Symbol := "2"
-        case "3":
-            Symbol := "3"
-        case "4":
-            Symbol := "4"
-        case "5":
-            Symbol := "5"
-        case "6":
-            Symbol := "6"
-        case "7":
-            Symbol := "7"
-        case "8":
-            Symbol := "8"
-        case "9":
-            Symbol := "9"
-        case "0":
-            Symbol := "0"
-    }
+;     Arr := StrSplit(Str, ".")
+;     ; ToolTip(Arr[2])
+;     switch Arr[2] {
+;         case "1":
+;             Symbol := "1"
+;         case "2":
+;             Symbol := "2"
+;         case "3":
+;             Symbol := "3"
+;         case "4":
+;             Symbol := "4"
+;         case "5":
+;             Symbol := "5"
+;         case "6":
+;             Symbol := "6"
+;         case "7":
+;             Symbol := "7"
+;         case "8":
+;             Symbol := "8"
+;         case "9":
+;             Symbol := "9"
+;         case "0":
+;             Symbol := "0"
+;     }
 
-    ; :*?COZ:0
-    PreArr := StrSplit(Arr[1], ":")
-    ; ToolTip(PreArr[3])
-    switch PreArr[3] {
-        case "1":
-            Pre := "1"
-        case "2":
-            Pre := "2"
-        case "3":
-            Pre := "3"
-        case "4":
-            Pre := "4"
-        case "5":
-            Pre := "5"
-        case "6":
-            Pre := "6"
-        case "7":
-            Pre := "7"
-        case "8":
-            Pre := "8"
-        case "9":
-            Pre := "9"
-        case "0":
-            Pre := "0"
-    }
+;     ; :*?COZ:0
+;     PreArr := StrSplit(Arr[1], ":")
+;     ; ToolTip(PreArr[3])
+;     switch PreArr[3] {
+;         case "1":
+;             Pre := "1"
+;         case "2":
+;             Pre := "2"
+;         case "3":
+;             Pre := "3"
+;         case "4":
+;             Pre := "4"
+;         case "5":
+;             Pre := "5"
+;         case "6":
+;             Pre := "6"
+;         case "7":
+;             Pre := "7"
+;         case "8":
+;             Pre := "8"
+;         case "9":
+;             Pre := "9"
+;         case "0":
+;             Pre := "0"
+;     }
 
-    Sleep(50)
-    SendInput(Pre)
-    Sleep(50)
-    SendInput("{U+002E}" . Symbol)
-}
+;     Sleep(50)
+;     SendInput(Pre)
+;     Sleep(50)
+;     SendInput("{U+002E}" . Symbol)
+; }
 
-:*?COZ:1`:1::
-:*?COZ:2`:1::
-:*?COZ:3`:1::
-:*?COZ:4`:1::
-:*?COZ:5`:1::
-:*?COZ:6`:1::
-:*?COZ:7`:1::
-:*?COZ:8`:1::
-:*?COZ:9`:1::
-:*?COZ:0`:1::
-:*?COZ:1`:2::
-:*?COZ:2`:2::
-:*?COZ:3`:2::
-:*?COZ:4`:2::
-:*?COZ:5`:2::
-:*?COZ:6`:2::
-:*?COZ:7`:2::
-:*?COZ:8`:2::
-:*?COZ:9`:2::
-:*?COZ:0`:2::
-:*?COZ:1`:3::
-:*?COZ:2`:3::
-:*?COZ:3`:3::
-:*?COZ:4`:3::
-:*?COZ:5`:3::
-:*?COZ:6`:3::
-:*?COZ:7`:3::
-:*?COZ:8`:3::
-:*?COZ:9`:3::
-:*?COZ:0`:3::
-:*?COZ:1`:4::
-:*?COZ:2`:4::
-:*?COZ:3`:4::
-:*?COZ:4`:4::
-:*?COZ:5`:4::
-:*?COZ:6`:4::
-:*?COZ:7`:4::
-:*?COZ:8`:4::
-:*?COZ:9`:4::
-:*?COZ:0`:4::
-:*?COZ:1`:5::
-:*?COZ:2`:5::
-:*?COZ:3`:5::
-:*?COZ:4`:5::
-:*?COZ:5`:5::
-:*?COZ:6`:5::
-:*?COZ:7`:5::
-:*?COZ:8`:5::
-:*?COZ:9`:5::
-:*?COZ:0`:5::
-:*?COZ:1`:6::
-:*?COZ:2`:6::
-:*?COZ:3`:6::
-:*?COZ:4`:6::
-:*?COZ:5`:6::
-:*?COZ:6`:6::
-:*?COZ:7`:6::
-:*?COZ:8`:6::
-:*?COZ:9`:6::
-:*?COZ:0`:6::
-:*?COZ:1`:7::
-:*?COZ:2`:7::
-:*?COZ:3`:7::
-:*?COZ:4`:7::
-:*?COZ:5`:7::
-:*?COZ:6`:7::
-:*?COZ:7`:7::
-:*?COZ:8`:7::
-:*?COZ:9`:7::
-:*?COZ:0`:7::
-:*?COZ:1`:8::
-:*?COZ:2`:8::
-:*?COZ:3`:8::
-:*?COZ:4`:8::
-:*?COZ:5`:8::
-:*?COZ:6`:8::
-:*?COZ:7`:8::
-:*?COZ:8`:8::
-:*?COZ:9`:8::
-:*?COZ:0`:8::
-:*?COZ:1`:9::
-:*?COZ:2`:9::
-:*?COZ:3`:9::
-:*?COZ:4`:9::
-:*?COZ:5`:9::
-:*?COZ:6`:9::
-:*?COZ:7`:9::
-:*?COZ:8`:9::
-:*?COZ:9`:9::
-:*?COZ:0`:9::
-:*?COZ:1`:0::
-:*?COZ:2`:0::
-:*?COZ:3`:0::
-:*?COZ:4`:0::
-:*?COZ:5`:0::
-:*?COZ:6`:0::
-:*?COZ:7`:0::
-:*?COZ:8`:0::
-:*?COZ:9`:0::
-:*?COZ:0`:0::
-{
-    ; :*?COZ:0`:0
-    str := ThisHotkey
+; 1: 微信输入法自身支持了
+; :*?COZ:1`:1::
+; :*?COZ:2`:1::
+; :*?COZ:3`:1::
+; :*?COZ:4`:1::
+; :*?COZ:5`:1::
+; :*?COZ:6`:1::
+; :*?COZ:7`:1::
+; :*?COZ:8`:1::
+; :*?COZ:9`:1::
+; :*?COZ:0`:1::
+; :*?COZ:1`:2::
+; :*?COZ:2`:2::
+; :*?COZ:3`:2::
+; :*?COZ:4`:2::
+; :*?COZ:5`:2::
+; :*?COZ:6`:2::
+; :*?COZ:7`:2::
+; :*?COZ:8`:2::
+; :*?COZ:9`:2::
+; :*?COZ:0`:2::
+; :*?COZ:1`:3::
+; :*?COZ:2`:3::
+; :*?COZ:3`:3::
+; :*?COZ:4`:3::
+; :*?COZ:5`:3::
+; :*?COZ:6`:3::
+; :*?COZ:7`:3::
+; :*?COZ:8`:3::
+; :*?COZ:9`:3::
+; :*?COZ:0`:3::
+; :*?COZ:1`:4::
+; :*?COZ:2`:4::
+; :*?COZ:3`:4::
+; :*?COZ:4`:4::
+; :*?COZ:5`:4::
+; :*?COZ:6`:4::
+; :*?COZ:7`:4::
+; :*?COZ:8`:4::
+; :*?COZ:9`:4::
+; :*?COZ:0`:4::
+; :*?COZ:1`:5::
+; :*?COZ:2`:5::
+; :*?COZ:3`:5::
+; :*?COZ:4`:5::
+; :*?COZ:5`:5::
+; :*?COZ:6`:5::
+; :*?COZ:7`:5::
+; :*?COZ:8`:5::
+; :*?COZ:9`:5::
+; :*?COZ:0`:5::
+; :*?COZ:1`:6::
+; :*?COZ:2`:6::
+; :*?COZ:3`:6::
+; :*?COZ:4`:6::
+; :*?COZ:5`:6::
+; :*?COZ:6`:6::
+; :*?COZ:7`:6::
+; :*?COZ:8`:6::
+; :*?COZ:9`:6::
+; :*?COZ:0`:6::
+; :*?COZ:1`:7::
+; :*?COZ:2`:7::
+; :*?COZ:3`:7::
+; :*?COZ:4`:7::
+; :*?COZ:5`:7::
+; :*?COZ:6`:7::
+; :*?COZ:7`:7::
+; :*?COZ:8`:7::
+; :*?COZ:9`:7::
+; :*?COZ:0`:7::
+; :*?COZ:1`:8::
+; :*?COZ:2`:8::
+; :*?COZ:3`:8::
+; :*?COZ:4`:8::
+; :*?COZ:5`:8::
+; :*?COZ:6`:8::
+; :*?COZ:7`:8::
+; :*?COZ:8`:8::
+; :*?COZ:9`:8::
+; :*?COZ:0`:8::
+; :*?COZ:1`:9::
+; :*?COZ:2`:9::
+; :*?COZ:3`:9::
+; :*?COZ:4`:9::
+; :*?COZ:5`:9::
+; :*?COZ:6`:9::
+; :*?COZ:7`:9::
+; :*?COZ:8`:9::
+; :*?COZ:9`:9::
+; :*?COZ:0`:9::
+; :*?COZ:1`:0::
+; :*?COZ:2`:0::
+; :*?COZ:3`:0::
+; :*?COZ:4`:0::
+; :*?COZ:5`:0::
+; :*?COZ:6`:0::
+; :*?COZ:7`:0::
+; :*?COZ:8`:0::
+; :*?COZ:9`:0::
+; :*?COZ:0`:0::
+; {
+;     ; :*?COZ:0`:0
+;     str := ThisHotkey
 
-    arr := StrSplit(str, ":")
-    switch arr[4] {
-        case "1":
-            symbol := "1"
-        case "2":
-            symbol := "2"
-        case "3":
-            symbol := "3"
-        case "4":
-            symbol := "4"
-        case "5":
-            symbol := "5"
-        case "6":
-            symbol := "6"
-        case "7":
-            symbol := "7"
-        case "8":
-            symbol := "8"
-        case "9":
-            symbol := "9"
-        case "0":
-            symbol := "0"
-    }
+;     arr := StrSplit(str, ":")
+;     switch arr[4] {
+;         case "1":
+;             symbol := "1"
+;         case "2":
+;             symbol := "2"
+;         case "3":
+;             symbol := "3"
+;         case "4":
+;             symbol := "4"
+;         case "5":
+;             symbol := "5"
+;         case "6":
+;             symbol := "6"
+;         case "7":
+;             symbol := "7"
+;         case "8":
+;             symbol := "8"
+;         case "9":
+;             symbol := "9"
+;         case "0":
+;             symbol := "0"
+;     }
 
-    switch arr[3] {
-        case "1":
-            pre := "1"
-        case "2":
-            pre := "2"
-        case "3":
-            pre := "3"
-        case "4":
-            pre := "4"
-        case "5":
-            pre := "5"
-        case "6":
-            pre := "6"
-        case "7":
-            pre := "7"
-        case "8":
-            pre := "8"
-        case "9":
-            pre := "9"
-        case "0":
-            pre := "0"
-    }
+;     switch arr[3] {
+;         case "1":
+;             pre := "1"
+;         case "2":
+;             pre := "2"
+;         case "3":
+;             pre := "3"
+;         case "4":
+;             pre := "4"
+;         case "5":
+;             pre := "5"
+;         case "6":
+;             pre := "6"
+;         case "7":
+;             pre := "7"
+;         case "8":
+;             pre := "8"
+;         case "9":
+;             pre := "9"
+;         case "0":
+;             pre := "0"
+;     }
 
-    Sleep(50)
-    SendInput(Pre)
-    Sleep(50)
-    SendInput("{U+003A}" . Symbol)
-}
+;     Sleep(50)
+;     SendInput(Pre)
+;     Sleep(50)
+;     SendInput("{U+003A}" . Symbol)
+; }
 
 ;#region Visual Studio
 #HotIf WinActive("ahk_exe devenv.exe")
@@ -1108,6 +1111,11 @@ SelectI(&Str) {
     SendInput(timeString)
 }
 
+:?COZ:rq:: {
+    timeString := FormatTime(, "yyyy-MM-dd")
+    SendInput(timeString)
+}
+
 :?COZ:js:: {
     SendInput("JavaScript")
     if IsCnIME()
@@ -1122,11 +1130,6 @@ SelectI(&Str) {
     {
         Send("{Enter}")
     }
-}
-
-:?COZ:rq:: {
-    timeString := FormatTime(, "yyyy-MM-dd")
-    SendInput(timeString)
 }
 
 ;#region select text to convert en punctuation
