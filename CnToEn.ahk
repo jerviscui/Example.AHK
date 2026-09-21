@@ -34,6 +34,14 @@ MainLoop() {
 ;     }
 ; }
 
+; 微信输入法输出「」
++[:: {
+    SendText("{}")
+    SendInput("{Left}")
+}
+
++]:: SendText("}")
+
 #Hotstring EndChars `t
 
 ; , to ，
