@@ -1,4 +1,4 @@
-﻿if !A_IsAdmin {
+if !A_IsAdmin {
     Run '*RunAs "' A_AhkPath '" "' A_ScriptFullPath '"'
     ExitApp
 }
@@ -500,10 +500,7 @@ Obsidian_After250() {
             return
         }
         ; else 单行
-        if (InStr(txt, "* ", 0, 1) > 0) {
-            select := false
-        }
-        else if (InStr(txt, ". ", 0, 1) > 0) {
+        if RegExMatch(txt, "^\s*(?:[*+-]|\d+\.)\s+") {
             select := false
         }
         else {
@@ -739,12 +736,17 @@ $!c:: {
 }
 
 ;#region AltTabMenu
+global AltTabConfirmed := false
+global AltTabStartedAt := 0
+
 GroupAdd "AltTabWindow", "ahk_class MultitaskingViewFrame"  ; Windows 10
 GroupAdd "AltTabWindow", "ahk_class TaskSwitcherWnd"  ; Windows Vista, 7, 8.1
 GroupAdd "AltTabWindow", "ahk_class #32771"  ; 更早的系统, 或启用了经典的 alt-tab
 
 #HotIf GetKeyState("Ctrl", "P")
 *!Tab:: {
+    global AltTabConfirmed, AltTabStartedAt
+
     KeyWait "Alt"
 
     Send "^!{Tab}"
@@ -753,37 +755,53 @@ GroupAdd "AltTabWindow", "ahk_class #32771"  ; 更早的系统, 或启用了经�
     ;     ToolTip "AltTabWindow"
     ; }
 
+    AltTabConfirmed := false
+    AltTabStartedAt := A_TickCount
     SetTimer AltTabMenuClose, 50
 }
 
 AltTabMenuClose()
 {
+    global AltTabConfirmed, AltTabStartedAt
+
     if (GetKeyState("Esc", "P")) {
+        AltTabConfirmed := false
         SetTimer , 0
 
         return
     }
 
     if (GetKeyState("Enter", "P")) {
+        AltTabConfirmed := true
+    }
+
+    if (A_TickCount - AltTabStartedAt > 10000) {
+        AltTabConfirmed := false
         SetTimer , 0
 
-        ActiveHwnd := WinActive("A")
-        ; ActiveHwnd := WinActive("A", , "ahk_group AltTabWindow") ; Visual Studio 检测不到
-        ; ToolTip "1 " . ActiveHwnd
-        if (!ActiveHwnd) {
-            Sleep 200
-            ActiveHwnd := WinActive("A")
-            ; ActiveHwnd := WinActive("A", , "ahk_group AltTabWindow") ; Visual Studio 检测不到
-            ; ToolTip "2 " . ActiveHwnd
-            if (!ActiveHwnd) {
-                return
-            }
-        }
-
-        MouseGetPos(&HX, &HY)
-        WinGetPos(&X, &Y, &W, &H)
-        MoveMouseToCenter(HX, HY, X, Y, W, H)
+        return
     }
+
+    if WinExist("ahk_group AltTabWindow") {
+        return
+    }
+
+    SetTimer , 0
+
+    if (!AltTabConfirmed) {
+        return
+    }
+
+    AltTabConfirmed := false
+
+    ActiveHwnd := WinActive("A")
+    if (!ActiveHwnd) {
+        return
+    }
+
+    MouseGetPos(&HX, &HY)
+    WinGetPos(&X, &Y, &W, &H, ActiveHwnd)
+    MoveMouseToCenter(HX, HY, X, Y, W, H)
 }
 #HotIf
 

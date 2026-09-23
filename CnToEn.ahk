@@ -1,4 +1,4 @@
-﻿if !A_IsAdmin {
+if !A_IsAdmin {
     Run '*RunAs "' A_AhkPath '" "' A_ScriptFullPath '"'
     ExitApp
 }
@@ -966,24 +966,29 @@ MainLoop() {
 
     count := SelectK(&str, 2)
 
-    ; copy
-    Send("^c")
-    if ClipWait(1) {
-        copy := A_Clipboard
+    oldClipboard := ClipboardAll()
+    try {
         A_Clipboard := ""
+        Send("^c")
+        if !ClipWait(1) {
+            return
+        }
+
+        copy := A_Clipboard
 
         ; remove space and last \n
         copy := RTrim(copy)
         copy := RTrim(copy, "`r`n")
 
         A_Clipboard := copy
-        ClipWait
+        Send("{Right}")
+        Send("^v")
+        Sleep(200)
+        Send("{Up " . (count + 1) . "}")
     }
-
-    Send("{Right}")
-    Send("^v")
-    Sleep(200)
-    Send("{Up " . count + 1 . "}")
+    finally {
+        A_Clipboard := oldClipboard
+    }
 }
 
 :*?B0COZ:y1k::
@@ -1074,11 +1079,21 @@ SelectK(&Str, Index) {
 
     count := SelectI(&str)
 
-    ; copy
-    Send("^c")
+    oldClipboard := ClipboardAll()
+    try {
+        A_Clipboard := ""
+        Send("^c")
+        if !ClipWait(1) {
+            return
+        }
 
-    Send("{Left}")
-    Send("^v")
+        Send("{Left}")
+        Send("^v")
+        Sleep(200)
+    }
+    finally {
+        A_Clipboard := oldClipboard
+    }
 }
 
 SelectI(&Str) {
