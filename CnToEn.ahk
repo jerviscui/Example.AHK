@@ -1211,8 +1211,8 @@ F14:: {
                 Txt := StrReplace(Txt, k, v)
             }
 
-            Txt := RegExReplace(Txt, "S)'(.*)'", "‘$1’")
-            Txt := RegExReplace(Txt, "S)`"(.*)`"", "“$1”")
+            Txt := RegExReplace(Txt, "S)'(.*?)'", "‘$1’")
+            Txt := RegExReplace(Txt, "S)`"(.*?)`"", "“$1”")
             ; clear space
             Txt := RegExReplace(Txt, "S)[\t ]*([，。？；：！《》、（）【】‘’“”])[\t ]*", "$1")
         }
